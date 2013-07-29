@@ -26,12 +26,12 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
                      'class'       => 'sb-add-new',
                      'link'        => $view->getHelper('baseUrl')->moduleUrl(array('action' => 'add')),
                  ),
-                 // TODO remove action
+                 // TODO implement remove action
                  array(
                      'title'       => 'Remove',
                      'description' => 'Remove selected slave configuration.',
                      'class'       => 'sb-remove-selected',
-                     'link'        => '#',//$view->getHelper('baseUrl')->moduleUrl(array('action' => 'remove')),
+                     'link'        => '#comming-soon',//$view->getHelper('baseUrl')->moduleUrl(array('action' => 'remove')),
                  ),
                  array(
                      'title'       => 'Help',

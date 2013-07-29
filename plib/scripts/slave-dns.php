@@ -1,5 +1,4 @@
 <?php
-
 pm_Loader::registerAutoload();
 pm_Context::init('slave-dns-manager');
 
