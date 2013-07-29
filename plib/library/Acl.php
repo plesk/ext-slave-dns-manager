@@ -32,6 +32,7 @@ REQUEST;
     private function _call($request)
     {
         $response = pm_ApiRpc::getService('1.6.5.0')->call($request);
+        // TODO error handling
 //        $response->dns->add_to_acl->result->status
 //        $response->dns->remove_from_acl->result->status
     }

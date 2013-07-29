@@ -9,8 +9,6 @@ class IndexController extends pm_Controller_Action
         if (!pm_Session::getClient()->isAdmin()) {
             throw new pm_Exception('Permission denied');
         }
-
-        $this->view->pageTitle = 'Slave DNS Manager';
     }
 
     public function indexAction()
@@ -20,6 +18,8 @@ class IndexController extends pm_Controller_Action
 
     public function listAction()
     {
+        $this->view->pageTitle = 'Slave DNS Manager';
+
         $slavesList = new Modules_SlaveDnsManager_List_Slaves($this->view, $this->_request);
         $this->view->list = $slavesList;
     }
@@ -32,6 +32,9 @@ class IndexController extends pm_Controller_Action
 
     public function addAction()
     {
+        $this->view->pageTitle = 'Create remote slave configuration';
+        $this->view->uplevelLink = pm_Context::getBaseUrl();
+
         $form = new Modules_SlaveDnsManager_Form_Add();
 
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
@@ -42,5 +45,11 @@ class IndexController extends pm_Controller_Action
         }
 
         $this->view->form = $form;
+    }
+
+    public function helpAction()
+    {
+        $this->view->pageTitle = 'How to setup remote slave server';
+        $this->view->uplevelLink = pm_Context::getBaseUrl();
     }
 }

@@ -1,0 +1,33 @@
+<ul class="ul">
+    <li>Slave server should has <b>Debian</b> installed</li>
+    <li>Install Bind:<br>
+        <pre>
+        apt-get install bind9
+        </pre>
+    </li>
+    <li>Add to /etc/bind/named.conf.options (into options {} directive):<br>
+        <pre>
+        allow-new-zones yes;
+        </pre>
+    </li>
+    <li>Add to /etc/bind/named.conf.local:<br>
+        <pre>
+        controls {
+          inet * port 953 allow { &gt;PLESK_IP&lt;; 127.0.0.1; };
+        };
+        </pre>
+    </li>
+    <li>Remember a key, we will use it on Plesk server /etc/bind/rndc.key:<br>
+        <pre>
+        key "rndc-key" {
+          algorithm hmac-md5;
+          secret "vwOxonI4n4CVRUhKAOAAIA==";
+        };
+        </pre>
+    </li>
+</ul>
+<div class="btns-box">
+    <span class="btn action" onclick="window.location.href='<?php echo $this->uplevelLink ?>'">
+        <button type="button" value="" name="send">OK</button>
+    </span>
+</div>
