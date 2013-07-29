@@ -13,15 +13,15 @@
     <li>Add to /etc/bind/named.conf.local:<br>
         <pre>
         controls {
-          inet * port 953 allow { &gt;PLESK_IP&lt;; 127.0.0.1; };
+          inet * port 953 allow { <b>&lt;PLESK_IP&gt;</b>; 127.0.0.1; };
         };
         </pre>
     </li>
     <li>Remember a key, we will use it on Plesk server /etc/bind/rndc.key:<br>
         <pre>
-        key "rndc-key" {
+        key &quot;rndc-key&quot; {
           algorithm hmac-md5;
-          secret "vwOxonI4n4CVRUhKAOAAIA==";
+          secret &quot;<b>vwOxonI4n4CVRUhKAOAAIA==</b>&quot;;
         };
         </pre>
     </li>
