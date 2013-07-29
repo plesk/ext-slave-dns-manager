@@ -16,18 +16,15 @@ REQUEST;
             $response = pm_ApiRpc::getService('1.6.5.0')->call($request);
             if ('ok' == $response->ip->get->result->status) {
                 foreach ($response->ip->get->result->addresses->ip_info as $address) {
-                    if (!isset($address->default)) {
-                        continue;
-                    }
                     self::$_serverIp = (string)$address->ip_address;
                     break;
                 }
             } else {
-                throw new pm_Exception("Unable to get server IP: {$response->ip->get->result->error}");
+                throw new pm_Exception("Unable to get server IP. Error: {$response->ip->get->result->error}");
             }
 
             if (!self::$_serverIp) {
-                throw new pm_Exception("Unable to get server IP");
+                throw new pm_Exception("Unable to get server IP: empty result.");
             }
         }
 
