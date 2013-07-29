@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+  <id>slave-dns-manager</id>
+  <name>Slave DNS Manager</name>
+  <description>Extension for managing remote slave DNS server via rndc protocol (bind).</description>
+  <version>1.0</version>
+  <release>1</release>
+  <vendor>Parallels, Inc.</vendor>
+  <plesk_min_version>11.5.30</plesk_min_version>
+</module>
