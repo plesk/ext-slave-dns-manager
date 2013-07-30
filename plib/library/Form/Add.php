@@ -7,7 +7,7 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
         parent::init();
 
         $this->addElement('text', 'ip', array(
-            'label' => 'IP Address',
+            'label' => $this->lmsg('ipLabel'),
             'value' => '',
             'class' => 'f-middle-size',
             'required' => true,
@@ -17,7 +17,7 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
             ),
         ));
         $this->addElement('text', 'port', array(
-            'label' => 'Port',
+            'label' => $this->lmsg('portLabel'),
             'value' => '953',
             'required' => true,
             'validators' => array(
@@ -26,13 +26,13 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
             ),
         ));
         $this->addElement('select', 'algorithm', array(
-            'label' => 'Algorithm',
+            'label' => $this->lmsg('algorithmLabel'),
             'multiOptions' => array('hmac-md5' => 'hmac-md5',),
             'value' => 'hmac-md5',
             'required' => true,
         ));
         $this->addElement('text', 'secret', array(
-            'label' => 'Secret',
+            'label' => $this->lmsg('secretLabel'),
             'value' => '',
             'required' => true,
             'validators' => array(

@@ -18,7 +18,7 @@ class IndexController extends pm_Controller_Action
 
     public function listAction()
     {
-        $this->view->pageTitle = 'Slave DNS Manager';
+        $this->view->pageTitle = $this->lmsg('listPageTitle');
 
         $slavesList = new Modules_SlaveDnsManager_List_Slaves($this->view, $this->_request);
         $this->view->list = $slavesList;
@@ -32,7 +32,7 @@ class IndexController extends pm_Controller_Action
 
     public function addAction()
     {
-        $this->view->pageTitle = 'Create remote slave configuration';
+        $this->view->pageTitle = $this->lmsg('addPageTitle');
         $this->view->uplevelLink = pm_Context::getBaseUrl();
 
         $form = new Modules_SlaveDnsManager_Form_Add();
@@ -40,7 +40,7 @@ class IndexController extends pm_Controller_Action
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             $form->process();
 
-            $this->_status->addMessage('info', 'Slave configuration was successfully saved.');
+            $this->_status->addMessage('info', $this->lmsg('slaveSaved'));
             $this->_helper->json(array('redirect' => pm_Context::getBaseUrl()));
         }
 
@@ -49,7 +49,7 @@ class IndexController extends pm_Controller_Action
 
     public function helpAction()
     {
-        $this->view->pageTitle = 'How to setup remote slave server';
+        $this->view->pageTitle = $this->lmsg('helpPageTitle');
         $this->view->uplevelLink = pm_Context::getBaseUrl();
     }
 }

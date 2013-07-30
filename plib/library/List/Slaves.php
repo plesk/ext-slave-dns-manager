@@ -16,26 +16,26 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
         $this->setData($data);
         $this->setColumns(array(
             'config' => array(
-                'title' => 'Configuration',
+                'title' => $this->lmsg('configColumnTitle'),
             ),
         ));
         $this->setTools(array(
                  array(
-                     'title'       => 'Add Slave',
-                     'description' => 'Create remote slave configuration.',
+                     'title'       => $this->lmsg('addToolTitle'),
+                     'description' => $this->lmsg('addToolDescription'),
                      'class'       => 'sb-add-new',
                      'link'        => $view->getHelper('baseUrl')->moduleUrl(array('action' => 'add')),
                  ),
                  // TODO implement remove action
                  array(
-                     'title'       => 'Remove',
-                     'description' => 'Remove selected slave configuration.',
+                     'title'       => $this->lmsg('removeToolTitle'),
+                     'description' => $this->lmsg('removeToolDescription'),
                      'class'       => 'sb-remove-selected',
                      'link'        => '#comming-soon',//$view->getHelper('baseUrl')->moduleUrl(array('action' => 'remove')),
                  ),
                  array(
-                     'title'       => 'Help',
-                     'description' => 'How to setup remote slave server.',
+                     'title'       => $this->lmsg('helpToolTitle'),
+                     'description' => $this->lmsg('helpToolDescription'),
                      'class'       => 'sb-help',
                      'link'        => $view->getHelper('baseUrl')->moduleUrl(array('action' => 'help')),
                  ),
