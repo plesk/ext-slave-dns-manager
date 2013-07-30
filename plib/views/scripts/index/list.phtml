@@ -1,1 +1,51 @@
 <?php echo $this->renderList($this->list); ?>
+<script type="text/javascript">
+    var removeSlaves = function() {
+        Jsw.messageBox.show({
+            type: Jsw.messageBox.TYPE_YESNO,
+            text: 'Remove the selected configurations?',
+            onYesClick: function() {
+                var data = {config: []};
+                var list = $$('div[id^="pm-list-"]').first();
+                list.select('input[name="listCheckbox[]"]').each(function(checkbox) {
+                    if (checkbox.checked) {
+                        data.config.push(checkbox.value);
+                    }
+                });
+
+                Jsw.redirectPost('<?php echo $this->getHelper('baseUrl')->moduleUrl(array('action' => 'remove')) ?>', data);
+            },
+            buttonTitles: {
+                'yes': 'Yes',
+                'no': 'No'
+            }
+        });
+    };
+
+    Jsw.onReady(function() {
+        var list = $$('div[id^="pm-list-"]').first();
+        var globalCheckbox = list.select('input[name="listGlobalCheckbox"]').first();
+        if (!globalCheckbox) return;
+        globalCheckbox.up('th').addClassName('select');
+        globalCheckbox.observe('click', function() {
+            list.select('input[name="listCheckbox[]"]').each(function(checkbox) {
+                if (globalCheckbox.checked) {
+                    checkbox.up('tr').addClassName('selected');
+                } else {
+                    checkbox.up('tr').removeClassName('selected');
+                }
+                checkbox.checked = globalCheckbox.checked;
+            });
+        });
+        list.select('input[name="listCheckbox[]"]').each(function(checkbox) {
+            checkbox.observe('click', function() {
+                if (checkbox.checked) {
+                    checkbox.up('tr').addClassName('selected');
+                } else {
+                    checkbox.up('tr').removeClassName('selected');
+                    globalCheckbox.checked = false;
+                }
+            });
+        });
+    });
+</script>

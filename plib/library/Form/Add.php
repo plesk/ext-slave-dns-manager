@@ -49,8 +49,5 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
     {
         $slave = new Modules_SlaveDnsManager_Slave();
         $slave->save($this->getValues());
-
-        $acl = new Modules_SlaveDnsManager_Acl();
-        $acl->add($this->getValue('ip'));
     }
 }

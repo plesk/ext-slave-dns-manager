@@ -47,6 +47,26 @@ class IndexController extends pm_Controller_Action
         $this->view->form = $form;
     }
 
+    public function removeAction()
+    {
+        $configs = $this->_getParam('config');
+        if (!$configs || !is_array($configs)) {
+            $this->_status->addMessage('error', $this->lmsg('emptySelection'));
+            $this->_redirect('/');
+        }
+
+        foreach ($configs as $config) {
+            try {
+                $slave = new Modules_SlaveDnsManager_Slave($config);
+                $slave->remove();
+                $this->_status->addMessage('info', $this->lmsg('slaveRemoved'));
+            } catch (pm_Exception $e) {
+                $this->_status->addMessage('error', $e->getMessage());
+            }
+        }
+        $this->_redirect('/');
+    }
+
     public function helpAction()
     {
         $this->view->pageTitle = $this->lmsg('helpPageTitle');

@@ -9,12 +9,18 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
         $data = array();
         foreach (Modules_SlaveDnsManager_Slave::getList() as $slave) {
             $data[] = array(
+                'select' => '<input type="checkbox" class="checkbox" name="listCheckbox[]" value="' . (string)$slave->getConfig() . '"/>',
                 'config' => (string)$slave->getConfig(),
             );
         }
 
         $this->setData($data);
         $this->setColumns(array(
+            'select' => array(
+                'title' => '<input type="checkbox" class="checkbox" name="listGlobalCheckbox"/>',
+                'sortable' => false,
+                'noEscape' => true,
+            ),
             'config' => array(
                 'title' => $this->lmsg('configColumnTitle'),
             ),
@@ -26,12 +32,11 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
                      'class'       => 'sb-add-new',
                      'link'        => $view->getHelper('baseUrl')->moduleUrl(array('action' => 'add')),
                  ),
-                 // TODO implement remove action
                  array(
                      'title'       => $this->lmsg('removeToolTitle'),
                      'description' => $this->lmsg('removeToolDescription'),
                      'class'       => 'sb-remove-selected',
-                     'link'        => '#comming-soon',//$view->getHelper('baseUrl')->moduleUrl(array('action' => 'remove')),
+                     'link'        => 'javascript:removeSlaves()',
                  ),
                  array(
                      'title'       => $this->lmsg('helpToolTitle'),

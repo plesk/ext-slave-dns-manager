@@ -17,5 +17,8 @@ $messages = array(
     'secretLabel' => 'Secret',
     'slaveSaved' => 'Slave configuration was successfully saved.',
 
+    'emptySelection' => 'Select items first.',
+    'slaveRemoved' => 'Slave configuration was successfully removed.',
+
     'helpPageTitle' => 'How to setup remote slave server',
 );

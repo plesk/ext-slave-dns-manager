@@ -68,5 +68,20 @@ CONF;
         if (false === $result) {
             throw new pm_Exception("Failed to save configuration {$this->_config}");
         }
+
+        $acl = new Modules_SlaveDnsManager_Acl();
+        $acl->add($slaveIp);
+    }
+
+    public function remove()
+    {
+        if (false === unlink($this->getConfigPath())) {
+            throw new pm_Exception("Failed to remove configuration {$this->_config}");
+        }
+
+        if (preg_match('/slave_(?<slaveIp>.+)\.conf/', $this->_config, $matches)) {
+            $acl = new Modules_SlaveDnsManager_Acl();
+            $acl->remove($matches['slaveIp']);
+        }
     }
 }
