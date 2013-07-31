@@ -6,29 +6,30 @@ class Modules_SlaveDnsManager_Rndc
 
     private function _getServerIP()
     {
-        if (!self::$_serverIp) {
-            $request = <<<REQUEST
-<ip>
-    <get/>
-</ip>
-REQUEST;
-
-            $response = pm_ApiRpc::getService('1.6.5.0')->call($request);
-            if ('ok' == $response->ip->get->result->status) {
-                foreach ($response->ip->get->result->addresses->ip_info as $address) {
-                    self::$_serverIp = (string)$address->ip_address;
-                    break;
-                }
-            } else {
-                throw new pm_Exception("Unable to get server IP. Error: {$response->ip->get->result->error}");
-            }
-
-            if (!self::$_serverIp) {
-                throw new pm_Exception("Unable to get server IP: empty result.");
-            }
+        if (self::$_serverIp) {
+            return self::$_serverIp;
         }
 
-        return self::$_serverIp;
+        $request = "<ip><get/></ip>";
+        $response = pm_ApiRpc::getService('1.6.5.0')->call($request);
+        if ('ok' != $response->ip->get->result->status) {
+            throw new pm_Exception("Unable to get server IP. Error: {$response->ip->get->result->error}");
+        }
+
+        // Get default IP
+        foreach ($response->ip->get->result->addresses->ip_info as $address) {
+            if (!isset($address->default)) {
+                continue;
+            }
+            return self::$_serverIp = (string)$address->ip_address;
+        }
+
+        // Get first IP
+        foreach ($response->ip->get->result->addresses->ip_info as $address) {
+            return self::$_serverIp = (string)$address->ip_address;
+        }
+
+        throw new pm_Exception("Unable to get server IP: empty result.");
     }
 
     private function _call($command)
