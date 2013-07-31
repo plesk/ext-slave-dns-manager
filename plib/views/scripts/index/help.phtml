@@ -1,23 +1,17 @@
 <ul class="ul">
-    <li>Slave server should has <b>Debian</b> installed</li>
-    <li>Install Bind:<br>
+    <li>Add to <i>named.conf</i> (config location depends on OS of slave server):<br>
         <pre>
-        apt-get install bind9
-        </pre>
-    </li>
-    <li>Add to /etc/bind/named.conf.options (into options {} directive):<br>
-        <pre>
-        allow-new-zones yes;
-        </pre>
-    </li>
-    <li>Add to /etc/bind/named.conf.local:<br>
-        <pre>
+        options {
+            ...
+            allow-new-zones yes;
+        };
+
         controls {
-          inet * port 953 allow { <b>&lt;PLESK_IP&gt;</b>; 127.0.0.1; };
+            inet * port 953 allow { <b>&lt;PLESK_IP&gt;</b>; 127.0.0.1; };
         };
         </pre>
     </li>
-    <li>Remember a key, we will use it on Plesk server /etc/bind/rndc.key:<br>
+    <li>Secret key you can get in <i>/etc/bind/rndc.key</i>, for example:<br>
         <pre>
         key &quot;rndc-key&quot; {
           algorithm hmac-md5;
