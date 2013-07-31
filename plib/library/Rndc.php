@@ -13,7 +13,7 @@ class Modules_SlaveDnsManager_Rndc
         $request = "<ip><get/></ip>";
         $response = pm_ApiRpc::getService('1.6.5.0')->call($request);
         if ('ok' != $response->ip->get->result->status) {
-            throw new pm_Exception("Unable to get server IP. Error: {$response->ip->get->result->error}");
+            throw new pm_Exception("Unable to get server IP. Error: {$response->ip->get->result->errtext}");
         }
 
         // Get default IP
