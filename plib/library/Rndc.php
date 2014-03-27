@@ -47,7 +47,7 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-            $command = '/usr/sbin/rndc -c ' . $slave->getConfigPath() . ' addzone ' . $domain . " '{ type slave; file \"/var/lib/bind/"
+            $command = '/usr/sbin/rndc -c ' . $slave->getConfigPath() . ' addzone ' . $domain . " '{ type slave; file \""
                 . $domain . "\"; masters { " . $this->_getServerIP() . "; }; };'";
             $this->_call($command);
         }
