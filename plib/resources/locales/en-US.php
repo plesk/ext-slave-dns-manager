@@ -4,21 +4,22 @@ $messages = array(
     'listPageTitle' => 'Slave DNS Manager',
     'configColumnTitle' => 'Configuration',
     'addToolTitle' => 'Add Slave',
-    'addToolDescription' => 'Create remote slave configuration.',
+    'addToolDescription' => 'Create a remote slave configuration.',
     'removeToolTitle' => 'Remove',
-    'removeToolDescription' => 'Remove selected slave configuration.',
+    'removeToolDescription' => 'Remove the selected slave configurations.',
     'helpToolTitle' => 'Help',
-    'helpToolDescription' => 'How to setup remote slave server.',
+    'helpToolDescription' => 'How to set up a remote slave server.',
 
-    'addPageTitle' => 'Create remote slave configuration',
-    'ipLabel' => 'IP Address',
+    'addPageTitle' => 'Creating Remote Slave Configuration',
+    'ipLabel' => 'IP address',
     'portLabel' => 'Port',
     'algorithmLabel' => 'Algorithm',
     'secretLabel' => 'Secret',
-    'slaveSaved' => 'Slave configuration was successfully saved.',
+    'slaveSaved' => 'The slave configuration was saved.',
 
     'emptySelection' => 'Select items first.',
-    'slaveRemoved' => 'Slave configuration was successfully removed.',
+    'slaveRemoved' => 'The slave configurations were removed.',
 
-    'helpPageTitle' => 'How to setup remote slave server',
+    'helpPageTitle' => 'How to Set up a Remote Slave Server',
 );
+
