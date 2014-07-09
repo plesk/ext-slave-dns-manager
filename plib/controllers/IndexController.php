@@ -45,6 +45,8 @@ class IndexController extends pm_Controller_Action
         }
 
         $this->view->form = $form;
+        $rndc = new Modules_SlaveDnsManager_Rndc();
+        $this->view->pleskIp = $this->view->escape($rndc->getServerIP());
     }
 
     public function removeAction()
@@ -65,11 +67,5 @@ class IndexController extends pm_Controller_Action
             }
         }
         $this->_redirect('/');
-    }
-
-    public function helpAction()
-    {
-        $this->view->pageTitle = $this->lmsg('helpPageTitle');
-        $this->view->uplevelLink = pm_Context::getBaseUrl();
     }
 }

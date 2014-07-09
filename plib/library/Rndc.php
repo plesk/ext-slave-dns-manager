@@ -4,7 +4,7 @@ class Modules_SlaveDnsManager_Rndc
 {
     private static $_serverIp = null;
 
-    private function _getServerIP()
+    public function getServerIP()
     {
         if (self::$_serverIp) {
             return self::$_serverIp;
@@ -58,7 +58,7 @@ class Modules_SlaveDnsManager_Rndc
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
             $command = '/usr/sbin/rndc -c ' . $slave->getConfigPath() . ' addzone ' . $domain . " '{ type slave; file \""
-                . $domain . "\"; masters { " . $this->_getServerIP() . "; }; };'";
+                . $domain . "\"; masters { " . $this->getServerIP() . "; }; };'";
             $this->_call($command);
         }
     }

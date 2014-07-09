@@ -9,7 +9,7 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
         $this->addElement('text', 'ip', array(
             'label' => $this->lmsg('ipLabel'),
             'value' => '',
-            'class' => 'f-middle-size',
+            'class' => 'f-large-size',
             'required' => true,
             'validators' => array(
                 array('NotEmpty', true),
@@ -33,10 +33,12 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
         ));
         $this->addElement('text', 'secret', array(
             'label' => $this->lmsg('secretLabel'),
-            'value' => '',
+            'value' => $this->_getRandomSecret(),
+            'class' => 'f-large-size',
             'required' => true,
             'validators' => array(
                 array('NotEmpty', true),
+                array('Callback', true, array(array($this, 'isValidSecret'))),
             ),
         ));
 
@@ -49,5 +51,22 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
     {
         $slave = new Modules_SlaveDnsManager_Slave();
         $slave->save($this->getValues());
+    }
+
+    public function isValidSecret($data)
+    {
+        if (base64_encode(base64_decode($data)) === $data) {
+            return true;
+        }
+        throw new pm_Exception($this->lmsg('invalidSecret'));
+    }
+
+    private function _getRandomSecret()
+    {
+        mt_srand((double)microtime() * 1000000);
+        $secret = md5(uniqid(mt_rand()));
+        $secret = substr($secret, 0, 22);
+        $secret = base64_encode($secret);
+        return $secret;
     }
 }

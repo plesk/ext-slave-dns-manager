@@ -19,7 +19,7 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
 
             $data[] = array(
                 'select' => '<input type="checkbox" class="checkbox" name="listCheckbox[]" value="' . (string)$slave->getConfig() . '"/>',
-                'status' => '<img class="slave-status" src="/theme/icons/16/plesk/' . $icon . '.png" title="' . $details . '"/>',
+                'status' => '<img class="slave-status" src="/theme/icons/16/plesk/' . $icon . '.png" title="' . htmlspecialchars($details) . '"/>',
                 'config' => (string)$slave->getConfig(),
             );
         }
@@ -58,12 +58,6 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
                      'description' => $this->lmsg('removeToolDescription'),
                      'class'       => 'sb-remove-selected',
                      'link'        => 'javascript:removeSlaves()',
-                 ),
-                 array(
-                     'title'       => $this->lmsg('helpToolTitle'),
-                     'description' => $this->lmsg('helpToolDescription'),
-                     'class'       => 'sb-help',
-                     'link'        => $view->getHelper('baseUrl')->moduleUrl(array('action' => 'help')),
                  ),
         ));
         $this->setDataUrl(array('action' => 'list-data'));
