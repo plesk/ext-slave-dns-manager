@@ -21,6 +21,9 @@ $messages = array(
     'slaveSaved' => 'The slave configuration was saved.',
 
     'emptySelection' => 'Select items first.',
+    'removeConfirmation' => 'Remove the selected configurations?',
+    'removeConfirmationYes' => 'Yes',
+    'removeConfirmationNo' => 'No',
     'slaveRemoved' => 'The slave configurations were removed.',
 
     'helpPageTitle' => 'How to Set up a Remote Slave Server',
