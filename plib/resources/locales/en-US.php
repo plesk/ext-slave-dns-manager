@@ -12,7 +12,8 @@ $messages = array(
     'removeToolDescription' => 'Remove the selected slave configurations.',
 
     'addPageTitle' => 'Creating Remote Slave Configuration',
-    'howTo' => 'Add to named.conf (config location depends on OS of slave server)',
+    'howTo' => 'Add to named.conf on the remote server (config location depends on OS of slave server)',
+    'learnMore' => 'Learn more about slave server setup.',
     'ipLabel' => 'IP address',
     'portLabel' => 'Port',
     'algorithmLabel' => 'Algorithm',
