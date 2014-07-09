@@ -32,12 +32,22 @@ class Modules_SlaveDnsManager_Rndc
         throw new pm_Exception("Unable to get server IP: empty result.");
     }
 
-    private function _call($command)
+    private function _call($command, $verbose = false)
     {
+        $command = $command . " 2>&1";
         exec($command, $out, $code);
+        $output = implode("\n", $out);
+
+        if ($verbose) {
+            if ($code != 0) {
+                throw new pm_Exception("Error code $code: $output");
+            }
+            return $output;
+        }
+
         if ($code != 0) {
             // Cannot send output header due to possible API-RPC calls
-            error_log("Error code $code: " . implode('', $out));
+            error_log("Error code $code: $output");
         }
 
         return $code == 0;
@@ -72,5 +82,11 @@ class Modules_SlaveDnsManager_Rndc
             $command = '/usr/sbin/rndc -c ' . $slave->getConfigPath() . ' delzone ' . $domain;
             $this->_call($command);
         }
+    }
+
+    public function checkStatus(Modules_SlaveDnsManager_Slave $slave)
+    {
+        $command = '/usr/sbin/rndc -c ' . $slave->getConfigPath() . ' status';
+        return $this->_call($command, true);
     }
 }

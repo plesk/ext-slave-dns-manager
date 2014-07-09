@@ -27,6 +27,10 @@
 
     Jsw.onReady(function() {
         var list = $$('div[id^="pm-list-"]').first();
+        list.select('.slave-status').each(function(icon) {
+            icon.up('td').addClassName('min');
+        });
+
         var globalCheckbox = list.select('input[name="listGlobalCheckbox"]').first();
         if (!globalCheckbox) return;
         globalCheckbox.up('th').addClassName('select');
@@ -41,6 +45,7 @@
             });
         });
         list.select('input[name="listCheckbox[]"]').each(function(checkbox) {
+            checkbox.up('td').addClassName('select');
             checkbox.observe('click', function() {
                 if (checkbox.checked) {
                     checkbox.up('tr').addClassName('selected');

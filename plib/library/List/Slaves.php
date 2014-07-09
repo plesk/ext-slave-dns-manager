@@ -8,8 +8,18 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
 
         $data = array();
         foreach (Modules_SlaveDnsManager_Slave::getList() as $slave) {
+            try {
+                $rndc = new Modules_SlaveDnsManager_Rndc();
+                $details = $rndc->checkStatus($slave);
+                $icon = 'ok';
+            } catch (Exception $e) {
+                $details = $e->getMessage();
+                $icon = 'warning';
+            }
+
             $data[] = array(
                 'select' => '<input type="checkbox" class="checkbox" name="listCheckbox[]" value="' . (string)$slave->getConfig() . '"/>',
+                'status' => '<img class="slave-status" src="/theme/icons/16/plesk/' . $icon . '.png" title="' . $details . '"/>',
                 'config' => (string)$slave->getConfig(),
             );
         }
@@ -18,6 +28,11 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
         $this->setColumns(array(
             'select' => array(
                 'title' => '<input type="checkbox" class="checkbox" name="listGlobalCheckbox"/>',
+                'sortable' => false,
+                'noEscape' => true,
+            ),
+            'status' => array(
+                'title' => $this->lmsg('statusColumnTitle'),
                 'sortable' => false,
                 'noEscape' => true,
             ),
@@ -31,6 +46,12 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
                      'description' => $this->lmsg('addToolDescription'),
                      'class'       => 'sb-add-new',
                      'link'        => $view->getHelper('baseUrl')->moduleUrl(array('action' => 'add')),
+                 ),
+                 array(
+                     'title'       => $this->lmsg('refreshToolTitle'),
+                     'description' => $this->lmsg('refreshToolDescription'),
+                     'class'       => 'sb-refresh',
+                     'link'        => pm_Context::getBaseUrl(),
                  ),
                  array(
                      'title'       => $this->lmsg('removeToolTitle'),
