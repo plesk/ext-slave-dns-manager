@@ -12,13 +12,13 @@ $messages = array(
     'removeToolDescription' => 'Remove the selected slave configurations.',
 
     'addPageTitle' => 'Creating Remote Slave Configuration',
-    'howTo' => 'Add to named.conf on the remote server (config location depends on OS of slave server)',
-    'learnMore' => 'Learn more about slave server setup.',
+    'howTo' => 'Add to named.conf on the remote server (config location depends on the OS of the slave server)',
+    'learnMore' => 'Learn more about the slave server setup.',
     'ipLabel' => 'IP address',
     'portLabel' => 'Port',
     'algorithmLabel' => 'Algorithm',
     'secretLabel' => 'Secret',
-    'invalidSecret' => 'The secret should be base64 encoded string.',
+    'invalidSecret' => 'The secret should be a base64 encoded string.',
     'slaveSaved' => 'The slave configuration was saved.',
 
     'viewPageTitle' => 'Remote Slave Configuration',
@@ -30,4 +30,3 @@ $messages = array(
     'removeConfirmationNo' => 'No',
     'slaveRemoved' => 'The slave configurations were removed.',
 );
-
