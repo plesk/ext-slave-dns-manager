@@ -3,7 +3,7 @@
 $messages = array(
     'listPageTitle' => 'Slave DNS Manager',
     'statusColumnTitle' => 'Status',
-    'configColumnTitle' => 'Configuration',
+    'configColumnTitle' => 'IP Address',
     'addToolTitle' => 'Add Slave',
     'addToolDescription' => 'Create a remote slave configuration.',
     'refreshToolTitle' => 'Refresh',

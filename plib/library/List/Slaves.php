@@ -17,11 +17,12 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
                 $icon = 'warning';
             }
 
+            $ip = $view->escape((string)$slave->getIp());
             $config = $view->escape((string)$slave->getConfig());
             $data[] = array(
                 'select' => '<input type="checkbox" class="checkbox" name="listCheckbox[]" value="' . $config . '"/>',
                 'status' => '<img class="slave-status" src="/theme/icons/16/plesk/' . $icon . '.png" title="' . $view->escape($details) . '"/>',
-                'config' => '<a href="' . $view->getHelper('baseUrl')->moduleUrl(array('action' => 'view')) . '?config=' . $config . '">' . $config . '</a>',
+                'config' => '<a href="' . $view->getHelper('baseUrl')->moduleUrl(array('action' => 'view')) . '?config=' . $config . '">' . $ip . '</a>',
             );
         }
 

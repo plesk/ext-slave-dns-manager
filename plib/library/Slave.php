@@ -31,6 +31,14 @@ class Modules_SlaveDnsManager_Slave
         $this->_config = $config;
     }
 
+    public function getIp()
+    {
+        if (preg_match('/^slave_(?<ip>[\d\.]+)\.conf$/', $this->_config, $matches)) {
+            return $matches['ip'];
+        }
+        return $this->_config;
+    }
+
     public function getConfig()
     {
         return $this->_config;
@@ -38,7 +46,7 @@ class Modules_SlaveDnsManager_Slave
 
     public function getConfigPath()
     {
-        return self::_getPath() . $this->_config;
+        return self::_getPath() . str_replace('..', '', $this->_config);
     }
 
     public function content()
