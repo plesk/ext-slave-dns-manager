@@ -41,6 +41,17 @@ class Modules_SlaveDnsManager_Slave
         return self::_getPath() . $this->_config;
     }
 
+    public function content()
+    {
+        $configPath = $this->getConfigPath();
+        $content = file_get_contents($configPath);
+        if (false === $content) {
+            throw new pm_Exception("Invalid configuration {$configPath}");
+        }
+
+        return $content;
+    }
+
     public function save(array $data)
     {
         $keyAlgorithm = array_key_exists('algorithm', $data) ? $data['algorithm'] : 'hmac-md5';

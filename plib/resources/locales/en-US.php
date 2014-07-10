@@ -21,6 +21,9 @@ $messages = array(
     'invalidSecret' => 'The secret should be base64 encoded string.',
     'slaveSaved' => 'The slave configuration was saved.',
 
+    'viewPageTitle' => 'Remote Slave Configuration',
+    'pathLabel' => 'Config path',
+
     'emptySelection' => 'Select items first.',
     'removeConfirmation' => 'Remove the selected configurations?',
     'removeConfirmationYes' => 'Yes',

@@ -49,6 +49,16 @@ class IndexController extends pm_Controller_Action
         $this->view->pleskIp = $this->view->escape($rndc->getServerIP());
     }
 
+    public function viewAction()
+    {
+        $this->view->pageTitle = $this->lmsg('viewPageTitle');
+        $this->view->uplevelLink = pm_Context::getBaseUrl();
+
+        $config = $this->_getParam('config');
+        $slave = new Modules_SlaveDnsManager_Slave($config);
+        $this->view->form = new Modules_SlaveDnsManager_Form_View($slave);
+    }
+
     public function removeAction()
     {
         $configs = $this->_getParam('config');

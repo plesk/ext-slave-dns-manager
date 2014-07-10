@@ -25,7 +25,7 @@
         });
     };
 
-    Jsw.onReady(function() {
+    var updateSlaves = function() {
         var list = $$('div[id^="pm-list-"]').first();
         list.select('.slave-status').each(function(icon) {
             icon.up('td').addClassName('min');
@@ -55,5 +55,14 @@
                 }
             });
         });
+    };
+
+    Jsw.onReady(function() {
+        updateSlaves();
+        var list = $$('div[id^="pm-list-"]').first();
+        var component = list.select('.content-wrapper > div').first();
+        if (component) {
+            Jsw.getComponent(component.identify())._onRedraw = updateSlaves;
+        }
     });
 </script>
