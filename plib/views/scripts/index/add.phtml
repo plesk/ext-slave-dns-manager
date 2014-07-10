@@ -1,23 +1,10 @@
 <?php
 // Copyright 1999-2014. Parallels IP Holdings GmbH. All Rights Reserved.
 ?>
+<div class="hint">
+    <?php echo $this->partial('index/slave-config.phtml', array('pleskIp' => $this->pleskIp, 'secret' => $this->form->getElement('secret')->getValue())) ?>
+</div>
 <p>
-    <?php echo $this->lmsg('howTo') ?>:
-    <pre>
-    options {
-        ...
-        allow-new-zones yes;
-    };
-
-    key &quot;rndc-key-<?php echo $this->pleskIp ?>&quot; {
-      algorithm hmac-md5;
-      secret &quot;<b><?php echo $this->escape($this->form->getElement('secret')->getValue()) ?></b>&quot;;
-    };
-
-    controls {
-        inet * port 953 allow { <b><?php echo $this->pleskIp ?></b>; 127.0.0.1; } keys { &quot;rndc-key&quot;; &quot;rndc-key-<?php echo $this->pleskIp ?>&quot;; };
-    };
-    </pre>
     <a href="http://devblog.plesk.com/2013/10/slave-dns-and-plesk/" target="_blank"><?php echo $this->lmsg('learnMore') ?></a>
 </p>
 <?php echo $this->form ?>

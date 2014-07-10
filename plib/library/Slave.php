@@ -59,11 +59,24 @@ class Modules_SlaveDnsManager_Slave
         $slaveIp = $data['ip'];
         $slavePort = array_key_exists('port', $data) ? $data['port'] : 953;
 
+        $view = new Zend_View();
+        $view->setScriptPath(pm_Context::getPlibDir() . 'views/scripts');
+        $rndc = new Modules_SlaveDnsManager_Rndc();
+        $pleskIp = $view->escape($rndc->getServerIP());
+        $slaveConfiguration = $view->partial('index/slave-config.phtml', array('pleskIp' => $pleskIp, 'secret' => $keySecret));
+        $slaveConfiguration = trim(html_entity_decode(strip_tags($slaveConfiguration)));
+        $slaveConfiguration = preg_replace('/^/m', '    ', $slaveConfiguration);
+
         $configuration = <<<CONF
+/*
+$slaveConfiguration
+*/
+
 key "rndc-key" {
     algorithm $keyAlgorithm;
     secret "$keySecret";
 };
+
 options {
     default-key "rndc-key";
     default-server $slaveIp;
