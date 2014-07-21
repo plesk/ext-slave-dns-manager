@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 1999-2014. Parallels IP Holdings GmbH. All Rights Reserved. -->
 <module>
 	<id>slave-dns-manager</id>
 	<name>Slave DNS Manager</name>
 	<description>The extension for managing a remote slave DNS server via rndc protocol (bind).</description>
 	<version>1.2</version>
-	<release>1</release>
+	<release>2</release>
 	<vendor>Parallels, Inc.</vendor>
 	<plesk_min_version>11.5.30</plesk_min_version>
 	<os>unix</os>
