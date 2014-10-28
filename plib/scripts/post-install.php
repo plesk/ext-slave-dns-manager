@@ -4,7 +4,13 @@ pm_Loader::registerAutoload();
 pm_Context::init('slave-dns-manager');
 
 try {
-    $script = PRODUCT_ROOT . '/bin/extension --exec ' . pm_Context::getModuleId() . ' slave-dns.php';
+    if (substr(PHP_OS, 0, 3) == 'WIN') {
+        $cmd = '"' . PRODUCT_ROOT . '\bin\extension.exe"';
+    } else {
+        $cmd = '"' . PRODUCT_ROOT . '/bin/extension"';
+    }
+
+    $script = $cmd . ' --exec ' . pm_Context::getModuleId() . ' slave-dns.php';
     $result = pm_ApiCli::call('server_dns', array('--enable-custom-backend', $script));
 } catch (pm_Exception $e) {
     echo $e->getMessage() . "\n";
