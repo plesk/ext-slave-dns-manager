@@ -5,8 +5,8 @@
 	<name>Slave DNS Manager</name>
 	<description>The extension for managing a remote slave DNS server via rndc protocol (bind).</description>
 	<version>1.2</version>
-	<release>3</release>
-	<vendor>Parallels, Inc.</vendor>
+	<release>4</release>
+	<vendor>Parallels</vendor>
 	<plesk_min_version>11.5.30</plesk_min_version>
 	<os>unix</os>
 </module>
