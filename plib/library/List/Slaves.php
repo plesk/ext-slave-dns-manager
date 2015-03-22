@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2014. Parallels IP Holdings GmbH. All Rights Reserved.
+// Copyright 1999-2015. Parallels IP Holdings GmbH. All Rights Reserved.
 class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
 {
     public function __construct(Zend_View $view, Zend_Controller_Request_Abstract $request)
