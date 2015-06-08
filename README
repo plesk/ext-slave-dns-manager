@@ -1,0 +1,6 @@
+Slave DNS Manager
+
+The extension for managing a remote slave DNS server via rndc protocol (bind).
+
+The following techniques are demonstrated:
+* Integration with DNS subsystem.
