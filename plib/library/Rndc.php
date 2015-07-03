@@ -21,12 +21,12 @@ class Modules_SlaveDnsManager_Rndc
             if (!isset($address->default)) {
                 continue;
             }
-            return self::$_serverIp = (string)$address->ip_address;
+            return self::$_serverIp = (string)$address->public_ip_address ?: (string)$address->ip_address;
         }
 
         // Get first IP
         foreach ($response->ip->get->result->addresses->ip_info as $address) {
-            return self::$_serverIp = (string)$address->ip_address;
+            return self::$_serverIp = (string)$address->public_ip_address ?: (string)$address->ip_address;
         }
 
         throw new pm_Exception("Unable to get server IP: empty result.");
