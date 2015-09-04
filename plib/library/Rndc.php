@@ -32,10 +32,15 @@ class Modules_SlaveDnsManager_Rndc
         throw new pm_Exception("Unable to get server IP: empty result.");
     }
 
-    private function _call($command, $verbose = false)
+    private function _call(Modules_SlaveDnsManager_Slave $slave, $arguments, $verbose = false)
     {
-        $command = $command . " 2>&1";
-        exec($command, $out, $code);
+        $arguments = "-c \"{$slave->getConfigPath()}\" {$arguments} 2>&1";
+        if (pm_ProductInfo::isWindows()) {
+            $command = '"' . PRODUCT_ROOT . '\dns\bin\rndc.exe"';
+        } else {
+            $command = '/usr/sbin/rndc';
+        }
+        exec("{$command} {$arguments}", $out, $code);
         $output = implode("\n", $out);
 
         if ($verbose) {
@@ -57,9 +62,7 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-            $command = '/usr/sbin/rndc -c ' . $slave->getConfigPath() . ' addzone ' . $domain . " '{ type slave; file \""
-                . $domain . "\"; masters { " . $this->getServerIP() . "; }; };'";
-            $this->_call($command);
+            $this->_call($slave, "addzone {$domain} \"{ type slave; file \\\"{$domain}\\\"; masters { {$this->getServerIP()}; }; };\"");
         }
     }
 
@@ -67,8 +70,7 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-            $command = '/usr/sbin/rndc -c ' . $slave->getConfigPath() . ' refresh ' . $domain;
-            $result = $this->_call($command);
+            $result = $this->_call($slave, "refresh {$domain}");
             if (false === $result) {
                 $this->addZone($domain, $slave);
             }
@@ -79,14 +81,12 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-            $command = '/usr/sbin/rndc -c ' . $slave->getConfigPath() . ' delzone ' . $domain;
-            $this->_call($command);
+            $this->_call($slave, "delzone {$domain}");
         }
     }
 
     public function checkStatus(Modules_SlaveDnsManager_Slave $slave)
     {
-        $command = '/usr/sbin/rndc -c ' . $slave->getConfigPath() . ' status';
-        return $this->_call($command, true);
+        return $this->_call($slave, "status", true);
     }
 }
