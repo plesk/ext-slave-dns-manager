@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2014. Parallels IP Holdings GmbH. All Rights Reserved.
+// Copyright 1999-2015. Parallels IP Holdings GmbH.
 class Modules_SlaveDnsManager_Rndc
 {
     private static $_serverIp = null;
@@ -21,12 +21,12 @@ class Modules_SlaveDnsManager_Rndc
             if (!isset($address->default)) {
                 continue;
             }
-            return self::$_serverIp = (string)$address->ip_address;
+            return self::$_serverIp = (string)$address->public_ip_address ?: (string)$address->ip_address;
         }
 
         // Get first IP
         foreach ($response->ip->get->result->addresses->ip_info as $address) {
-            return self::$_serverIp = (string)$address->ip_address;
+            return self::$_serverIp = (string)$address->public_ip_address ?: (string)$address->ip_address;
         }
 
         throw new pm_Exception("Unable to get server IP: empty result.");
