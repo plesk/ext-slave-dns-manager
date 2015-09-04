@@ -4,7 +4,7 @@ pm_Loader::registerAutoload();
 pm_Context::init('slave-dns-manager');
 
 try {
-    if (substr(PHP_OS, 0, 3) == 'WIN') {
+    if (pm_ProductInfo::isWindows()) {
         $cmd = '"' . PRODUCT_ROOT . '\bin\extension.exe"';
     } else {
         $cmd = '"' . PRODUCT_ROOT . '/bin/extension"';

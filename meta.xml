@@ -6,6 +6,6 @@
 	<description>The extension for managing a remote slave DNS server via rndc protocol (bind).</description>
 	<version>1.3</version>
 	<release>1</release>
-	<vendor>Parallels, Inc.</vendor>
-	<plesk_min_version>11.5.30</plesk_min_version>
+	<vendor>Odin</vendor>
+	<plesk_min_version>12.0.18</plesk_min_version>
 </module>
