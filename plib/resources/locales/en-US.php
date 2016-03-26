@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2015. Parallels IP Holdings GmbH.
+// Copyright 1999-2016. Parallels IP Holdings GmbH.
 $messages = array(
     'listPageTitle' => 'Slave DNS Manager',
     'statusColumnTitle' => 'Status',
