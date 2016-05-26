@@ -15,6 +15,15 @@ class Factory
      */
     public static function get($command, $params)
     {
+        switch ($command) {
+            case 'add-slave' :
+                return new DnsSlave\AddCommand($params);
+            case 'get-slaves' :
+                return new DnsSlave\ListCommand($params);
+            case 'remove-slave' :
+                return new DnsSlave\RemoveCommand($params);
+        }
+
         throw new ApiException("API command '{$command}' is not available");
     }
 }
