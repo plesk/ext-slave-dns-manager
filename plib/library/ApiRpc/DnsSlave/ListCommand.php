@@ -26,14 +26,15 @@ class ListCommand extends AbstractCommand
             $ip = (string)$slave->getIp();
             $config = (string)$slave->getConfig();
 
-            $data['ip:' . $ip ] = $ip;
-            $data['status:' . $ip ] = $status;
-            $data['details:' . $ip ] = $details;
-            $data['config:' . $ip ] = $config;
-
+            $data[] = [
+                'ip' => $ip,
+                'status' => $status,
+                'details' => $details,
+                'config' => $config,
+            ];
         }
 
-        return $data;
+        return ['slave' => $data];
     }
 }
 

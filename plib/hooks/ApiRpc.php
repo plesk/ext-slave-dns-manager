@@ -5,15 +5,12 @@ use Modules_SlaveDnsManager_ApiRpc\Factory;
 
 class Modules_SlaveDnsManager_ApiRpc extends pm_Hook_ApiRpc
 {
-    public function call($params)
+    public function call($data)
     {
-        if (!isset($params['command'])) {
-            throw new Modules_SlaveDnsManager_ApiRpc\Exception\ApiException('Command is not specified' . print_r($params, true));
+        $result = [];
+        foreach ($data as $command => $params) {
+            $result[$command] = Factory::get($command, $params)->run();
         }
-
-        $command = $params['command'];
-        unset($params['command']);
-
-        return Factory::get($command, $params)->run();
+        return $result;
     }
 }
