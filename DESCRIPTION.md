@@ -1,2 +1,1 @@
-The extension for managing a remote slave DNS server via rndc protocol (bind).
-
+The Slave DNS Manager extension allows you to synchronize the master DNS server hosted on the Plesk instance with multiple slave DNS servers that are located on remote servers without Plesk. The extension uses BIND's rndc utility for communication purposes and supports Linux servers with BIND.
