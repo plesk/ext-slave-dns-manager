@@ -15,7 +15,7 @@ class Modules_SlaveDnsManager_Rndc
 
         if ($verbose) {
             if ($code != 0) {
-                throw new pm_Exception("Error code $code: $output");
+                throw new pm_Exception("$command $arguments\n$output\n\nError code: $code");
             }
             return $output;
         }
