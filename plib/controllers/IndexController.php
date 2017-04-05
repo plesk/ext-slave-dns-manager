@@ -45,8 +45,7 @@ class IndexController extends pm_Controller_Action
         }
 
         $this->view->form = $form;
-        $rndc = new Modules_SlaveDnsManager_Rndc();
-        $this->view->pleskIp = $this->view->escape($rndc->getServerIP());
+        $this->view->pleskIp = "pleskIp";
     }
 
     public function viewAction()

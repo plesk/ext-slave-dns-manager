@@ -31,6 +31,53 @@ class Modules_SlaveDnsManager_Slave
         $this->_config = $config;
     }
 
+    public function getPleskIPs()
+    {
+        $ips = array();
+
+        $request = "<ip><get/></ip>";
+        $response = pm_ApiRpc::getService('1.6.5.0')->call($request);
+        if ('ok' != $response->ip->get->result->status) {
+            throw new pm_Exception("Unable to get server IP. Error: {$response->ip->get->result->errtext}");
+        }
+
+        // Get all IP-addresses
+        foreach ($response->ip->get->result->addresses->ip_info as $address) {
+            $ips[(string)$address->ip_address] = (string)$address->ip_address;
+        }
+
+        if (count($ips) >= 0) {
+            return $ips;
+        }
+
+        throw new pm_Exception("Unable to get server IP: empty result.");
+    }
+
+    // Legacy code for backward compatibility with current ApiRpc
+    public function getDefaultPleskIp()
+    {
+        $request = "<ip><get/></ip>";
+        $response = pm_ApiRpc::getService('1.6.5.0')->call($request);
+        if ('ok' != $response->ip->get->result->status) {
+            throw new pm_Exception("Unable to get server IP. Error: {$response->ip->get->result->errtext}");
+        }
+
+        // Get default IP
+        foreach ($response->ip->get->result->addresses->ip_info as $address) {
+            if (!isset($address->default)) {
+                continue;
+            }
+            return (string)$address->public_ip_address ?: (string)$address->ip_address;
+        }
+
+        // Get first IP
+        foreach ($response->ip->get->result->addresses->ip_info as $address) {
+            return (string)$address->public_ip_address ?: (string)$address->ip_address;
+        }
+
+        throw new pm_Exception("Unable to get server IP: empty result.");
+    }
+
     public function getIp()
     {
         if (preg_match('/^slave_(?<ip>[\d\.]+)\.conf$/', $this->_config, $matches)) {
@@ -62,15 +109,22 @@ class Modules_SlaveDnsManager_Slave
 
     public function save(array $data)
     {
+
+        $pleskIp = array_key_exists('pleskIp', $data) ? $data['pleskIp'] : $this->getDefaultPleskIp();
+        $slaveIp = $data['ip'];
+
         $keyAlgorithm = array_key_exists('algorithm', $data) ? $data['algorithm'] : 'hmac-md5';
         $keySecret = $data['secret'];
-        $slaveIp = $data['ip'];
-        $slavePort = array_key_exists('port', $data) ? $data['port'] : 953;
+
+        $rndcPort = array_key_exists('port', $data) ? $data['port'] : 953;
+        $rndcKeyid = array_key_exists('rndcKeyid', $data) ? $data['rndcKeyid'] : 'rndc-key';
+        $rndcClass = array_key_exists('rndcClass', $data) ? $data['rndcClass'] : 'IN';
+        $rndcView = array_key_exists('rndcView', $data) ? $data['rndcView'] : '_default';
+
+        pm_Settings::set($slaveIp, "$pleskIp:$rndcPort:$rndcKeyid:$rndcClass:$rndcView");
 
         $view = new Zend_View();
         $view->setScriptPath(pm_Context::getPlibDir() . 'views/scripts');
-        $rndc = new Modules_SlaveDnsManager_Rndc();
-        $pleskIp = $view->escape($rndc->getServerIP());
         $slaveConfiguration = $view->partial('index/slave-config.phtml', array('pleskIp' => $pleskIp, 'secret' => $keySecret));
         $slaveConfiguration = trim(html_entity_decode(strip_tags($slaveConfiguration)));
         $slaveConfiguration = preg_replace('/^/m', '    ', $slaveConfiguration);
@@ -80,16 +134,17 @@ class Modules_SlaveDnsManager_Slave
 $slaveConfiguration
 */
 
-key "rndc-key" {
+/*
+** SYNOPSIS
+**   rndc [-b source-address] [-s server] [-p port] [-y key_id] {command} zone [class [view]]
+** Saved settings:
+**   rndc -b $pleskIp -s $slaveIp -p $rndcPort -y $rndcKeyid {command} zone $rndcClass $rndcView
+*/
+key "$rndcKeyid" {
     algorithm $keyAlgorithm;
     secret "$keySecret";
 };
 
-options {
-    default-key "rndc-key";
-    default-server $slaveIp;
-    default-port $slavePort;
-};
 CONF;
 
         if (null === $this->_config) {
@@ -114,6 +169,8 @@ CONF;
         if (preg_match('/slave_(?<slaveIp>.+)\.conf/', $this->_config, $matches)) {
             $acl = new Modules_SlaveDnsManager_Acl();
             $acl->remove($matches['slaveIp']);
+
+            pm_Settings::set($matches['slaveIp'], "");
         }
     }
 }

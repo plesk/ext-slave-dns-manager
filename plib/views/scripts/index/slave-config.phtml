@@ -2,18 +2,25 @@
 // Copyright 1999-2016. Parallels IP Holdings GmbH.
 ?>
 <?php echo pm_Locale::lmsg('howTo') ?>:
-<pre>
+<script type="text/javascript"><!--
+function updatePleskIp() {
+var pleskIp = document.getElementById("pleskIp");
+document.getElementById('examplePleskIp_one').innerHTML = pleskIp.options[pleskIp.selectedIndex].value;
+document.getElementById('examplePleskIp_two').innerHTML = pleskIp.options[pleskIp.selectedIndex].value;
+document.getElementById('examplePleskIp_three').innerHTML = pleskIp.options[pleskIp.selectedIndex].value;
+}
+--></script><pre>
 options {
     ...
     allow-new-zones yes;
 };
 
-key &quot;rndc-key-<?php echo $this->pleskIp ?>&quot; {
+key &quot;rndc-key-<b><span id="examplePleskIp_one"><?php echo $this->escape($this->pleskIp) ?></span></b>&quot; {
   algorithm hmac-md5;
   secret &quot;<b><?php echo $this->escape($this->secret) ?></b>&quot;;
 };
 
 controls {
-    inet * port 953 allow { <b><?php echo $this->pleskIp ?></b>; 127.0.0.1; } keys { &quot;rndc-key&quot;; &quot;rndc-key-<?php echo $this->pleskIp ?>&quot;; };
+    inet * port 953 allow { <b><span id="examplePleskIp_two"><?php echo $this->escape($this->pleskIp) ?></span></b>; 127.0.0.1; } keys { &quot;rndc-key-<b><span id="examplePleskIp_three"><?php echo $this->escape($this->pleskIp) ?></span></b>&quot;; };
 };
 </pre>
