@@ -59,6 +59,12 @@ class IndexController extends pm_Controller_Action
         $this->view->form = new Modules_SlaveDnsManager_Form_View($slave);
     }
 
+    public function resyncAction()
+    {
+        $this->view->pageTitle = $this->lmsg('resyncPageTitle');
+        $this->view->uplevelLink = pm_Context::getBaseUrl();
+    }
+
     public function removeAction()
     {
         $configs = $this->_getParam('config');

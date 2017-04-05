@@ -61,6 +61,12 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
                      'class'       => 'sb-remove-selected',
                      'link'        => 'javascript:removeSlaves()',
                  ),
+                 array(
+                     'title'       => $this->lmsg('resyncToolTitle'),
+                     'description' => $this->lmsg('resyncToolDescription'),
+                     'class'       => 'sb-restart',
+                     'link'        => $view->getHelper('baseUrl')->moduleUrl(array('action' => 'resync')),
+                 ),
         ));
         $this->setDataUrl(array('action' => 'list-data'));
     }

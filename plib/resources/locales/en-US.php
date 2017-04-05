@@ -13,6 +13,8 @@ $messages = array(
     'refreshToolDescription' => 'Refresh remote slaves status',
     'removeToolTitle' => 'Remove',
     'removeToolDescription' => 'Remove the selected slave configurations.',
+    'resyncToolTitle' => 'Resync',
+    'resyncToolDescription' => 'Show Plesk command for resync all slaves with master.',
 
     'addPageTitle' => 'Creating Remote Slave Configuration',
     'howTo' => 'Add to named.conf on the remote server (config location depends on the OS of the slave server)',
@@ -26,6 +28,8 @@ $messages = array(
 
     'viewPageTitle' => 'Remote Slave Configuration',
     'pathLabel' => 'Config path',
+
+    'resyncPageTitle' => 'Resync slaves DNS',
 
     'emptySelection' => 'Select items first.',
     'removeConfirmation' => 'Remove the selected configurations?',
