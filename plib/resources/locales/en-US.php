@@ -1,6 +1,9 @@
 <?php
 // Copyright 1999-2016. Parallels IP Holdings GmbH.
 $messages = array(
+    // Pathbar
+    'controllers.index.index.title' => 'Slave DNS Manager',
+
     'listPageTitle' => 'Slave DNS Manager',
     'statusColumnTitle' => 'Status',
     'configColumnTitle' => 'IP Address',
