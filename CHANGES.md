@@ -9,7 +9,7 @@
 
 # 1.7.2 (4 April 2017)
 * [+] Add "Troubleshooting" in README.md
-* [*] Change link for [[learnMore]] from "http://devblog.plesk.com" to "https://www.plesk.cloud"
+* [*] Change link for [[learnMore]] from "http://devblog.plesk.com" to "https://www.plesk.com"
 * [+] Add RU description in meta.xml
 * [-] Fixed category in meta.xml
 * [+] Add DESCRIPTION.md
