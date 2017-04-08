@@ -59,12 +59,22 @@ class IndexController extends pm_Controller_Action
 
     public function resyncAction()
     {
-        $this->view->pageTitle = $this->lmsg('resyncPageTitle');
-        $this->view->uplevelLink = pm_Context::getBaseUrl();
+        if (!$this->getRequest()->isPost()) {
+            throw new pm_Exception('Method POST is required');
+        }
+
+        pm_ApiCli::call('repair', ['--dns', '-sync-zones', '-y']);
+
+        $this->_status->addInfo($this->lmsg('resyncDone'));
+        $this->_redirect('/');
     }
 
     public function removeAction()
     {
+        if (!$this->getRequest()->isPost()) {
+            throw new pm_Exception('Method POST is required');
+        }
+
         $configs = $this->_getParam('config');
         if (!$configs || !is_array($configs)) {
             $this->_status->addMessage('error', $this->lmsg('emptySelection'));

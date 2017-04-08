@@ -65,7 +65,7 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
                      'title'       => $this->lmsg('resyncToolTitle'),
                      'description' => $this->lmsg('resyncToolDescription'),
                      'class'       => 'sb-restart',
-                     'link'        => $view->getHelper('baseUrl')->moduleUrl(array('action' => 'resync')),
+                     'link'        => 'javascript:resyncZones()',
                  ),
         ));
         $this->setDataUrl(array('action' => 'list-data'));

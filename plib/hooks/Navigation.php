@@ -1,4 +1,6 @@
 <?php
+// Copyright 1999-2016. Parallels IP Holdings GmbH.
+
 class Modules_SlaveDnsManager_Navigation extends pm_Hook_Navigation
 {
     public function getNavigation()
@@ -15,10 +17,6 @@ class Modules_SlaveDnsManager_Navigation extends pm_Hook_Navigation
                     [
                         'controller' => 'index',
                         'action' => 'view',
-                    ],
-                    [
-                        'controller' => 'index',
-                        'action' => 'resync',
                     ],
                 ],
             ],
