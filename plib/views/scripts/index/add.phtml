@@ -1,8 +1,29 @@
 <?php
 // Copyright 1999-2016. Parallels IP Holdings GmbH.
 ?>
-<div class="hint">
-    <?php echo $this->partial('index/slave-config.phtml', array('pleskIp' => $this->pleskIp, 'secret' => $this->form->getElement('secret')->getValue())) ?>
+<script type="text/javascript">
+    Jsw.onReady(function () {
+        var select = document.getElementById('<?=$this->form->getElement('masterIp')->getId()?>');
+
+        function updateMasterIp() {
+            var value = select.options[select.selectedIndex].value;
+            var placeholders = document.getElementsByClassName('js-placeholder-ip');
+            for (var i = 0; i < placeholders.length; i++) {
+                placeholders[i].innerHTML = value;
+            }
+        }
+        select.addEventListener('change', updateMasterIp);
+
+        var config = document.getElementById('slave-config');
+        config.innerHTML = config.innerHTML.replace(/%%js-placeholder-ip%%/g, '<span class="js-placeholder-ip"></span>');
+        updateMasterIp();
+    });
+</script>
+<div class="hint" id="slave-config">
+    <?=$this->partial('index/slave-config.phtml', [
+        'masterIp' => '%%js-placeholder-ip%%',
+        'secret' => $this->form->getElement('secret')->getValue(),
+    ])?>
 </div>
 <p>
     <a href="https://www.plesk.cloud/best-practices/slave-dns-and-plesk" target="_blank"><?php echo $this->lmsg('learnMore') ?></a>

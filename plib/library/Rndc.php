@@ -4,13 +4,21 @@ class Modules_SlaveDnsManager_Rndc
 {
     private function _call(Modules_SlaveDnsManager_Slave $slave, $arguments, $verbose = false)
     {
-        $arguments = "-c \"{$slave->getConfigPath()}\" {$arguments} 2>&1";
+        $arguments = join(' ', [
+            "-b \"{$slave->getMasterIp()}\"",
+            "-s \"{$slave->getIp()}\"",
+            "-p \"{$slave->getPort()}\"",
+            "-y \"{$slave->getRndcKeyId()}\"",
+            "-c \"{$slave->getConfigPath()}\"",
+            $arguments,
+        ]);
+
         if (pm_ProductInfo::isWindows()) {
             $command = '"' . PRODUCT_ROOT . '\dns\bin\rndc.exe"';
         } else {
             $command = '/usr/sbin/rndc';
         }
-        exec("{$command} {$arguments}", $out, $code);
+        exec("{$command} {$arguments} 2>&1", $out, $code);
         $output = implode("\n", $out);
 
         if ($verbose) {
@@ -32,11 +40,8 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-
-            $settings = pm_Settings::get($slave->getIp());
-            list($pleskIp, $rndcPort, $rndcKeyid, $rndcClass, $rndcView) = explode(":", $settings);
- 
-            $this->_call($slave, "-b \"{$pleskIp}\" -s \"{$slave->getIp()}\" -p \"{$rndcPort}\" -y \"{$rndcKeyid}\" addzone \"{$domain}\" \"{$rndcClass}\" \"{$rndcView}\" \"{ type slave; file \\\"{$domain}\\\"; masters { {$pleskIp}; }; };\"");
+            $this->_call($slave, "addzone \"{$domain}\" \"{$slave->getRndcClass()}\" \"{$slave->getRndcView()}\"" .
+                " \"{ type slave; file \\\"{$domain}\\\"; masters { {$slave->getMasterIp()}; }; };\"");
         }
     }
 
@@ -44,11 +49,7 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-
-            $settings = pm_Settings::get($slave->getIp());
-            list($pleskIp, $rndcPort, $rndcKeyid, $rndcClass, $rndcView) = explode(":", $settings);
-
-            $result = $this->_call($slave, "-b \"{$pleskIp}\" -s \"{$slave->getIp()}\" -p \"{$rndcPort}\" -y \"{$rndcKeyid}\" refresh \"{$domain}\" \"{$rndcClass}\" \"{$rndcView}\"");
+            $result = $this->_call($slave, "refresh \"{$domain}\" \"{$slave->getRndcClass()}\" \"{$slave->getRndcView()}\"");
             if (false === $result) {
                 $this->addZone($domain, $slave);
             }
@@ -59,19 +60,12 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-
-            $settings = pm_Settings::get($slave->getIp());
-            list($pleskIp, $rndcPort, $rndcKeyid, $rndcClass, $rndcView) = explode(":", $settings);
-
-            $this->_call($slave, "-b \"{$pleskIp}\" -s \"{$slave->getIp()}\" -p \"{$rndcPort}\" -y \"{$rndcKeyid}\" delzone \"{$domain}\" \"{$rndcClass}\" \"{$rndcView}\"");
+            $this->_call($slave, "delzone \"{$domain}\" \"{$slave->getRndcClass()}\" \"{$slave->getRndcView()}\"");
         }
     }
 
     public function checkStatus(Modules_SlaveDnsManager_Slave $slave)
     {
-        $settings = pm_Settings::get($slave->getIp());
-        list($pleskIp, $rndcPort, $rndcKeyid, $rndcClass, $rndcView) = explode(":", $settings);
-
-        return $this->_call($slave, "-b \"{$pleskIp}\" -s \"{$slave->getIp()}\" -p \"{$rndcPort}\" -y \"{$rndcKeyid}\" status", true);
+        return $this->_call($slave, "status", true);
     }
 }

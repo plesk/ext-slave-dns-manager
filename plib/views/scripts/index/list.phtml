@@ -6,6 +6,7 @@
     var removeSlaves = function() {
         Jsw.messageBox.show({
             type: Jsw.messageBox.TYPE_YESNO,
+            subtype: 'delete',
             text: '<?php echo $this->lmsg('removeConfirmation') ?>',
             onYesClick: function() {
                 var data = {config: []};

@@ -6,16 +6,13 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
     {
         parent::init();
 
-        $this->addElement('select', 'pleskIp', array(
-            'label' => $this->lmsg('pleskIpLabel'),
-            'multiOptions' => $this->_getPleskIPs(),
+        $this->addElement('select', 'masterIp', array(
+            'label' => $this->lmsg('masterIpLabel'),
+            'multiOptions' => $this->_getIps(),
             'required' => true,
             'validators' => array(
                 array('NotEmpty', true),
                 array('Ip', true),
-            ),
-            'attribs' => array(
-                'onchange' => 'javascript:updatePleskIp()',
             ),
         ));
         $this->addElement('text', 'ip', array(
@@ -100,13 +97,10 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
         throw new pm_Exception($this->lmsg('invalidAlnumDashUnderscore'));
     }
 
-    private function _getPleskIPs()
+    private function _getIps()
     {
-        $slave = new Modules_SlaveDnsManager_Slave();
-        $ips = $slave->getPleskIPs();
-        $select = array('pleskIp' => 'Select IP');
-        $select = array_merge($select, $ips);
-        return $select;
+        $ips = Modules_SlaveDnsManager_IpAddress::getAvailable();
+        return array_combine($ips, $ips);
     }
 
     private function _getRandomSecret()

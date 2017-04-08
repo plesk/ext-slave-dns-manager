@@ -45,7 +45,6 @@ class IndexController extends pm_Controller_Action
         }
 
         $this->view->form = $form;
-        $this->view->pleskIp = "pleskIp";
     }
 
     public function viewAction()
