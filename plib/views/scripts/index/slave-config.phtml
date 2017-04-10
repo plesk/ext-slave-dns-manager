@@ -1,19 +1,19 @@
 <?php
 // Copyright 1999-2016. Parallels IP Holdings GmbH.
 ?>
-<?php echo pm_Locale::lmsg('howTo') ?>:
+<?=pm_Locale::lmsg('howTo')?>:
 <pre>
 options {
     ...
     allow-new-zones yes;
 };
 
-key &quot;rndc-key-<?php echo $this->pleskIp ?>&quot; {
+    key &quot;rndc-key-<i><?=$this->escape($this->masterIp)?></i>&quot; {
   algorithm hmac-md5;
-  secret &quot;<b><?php echo $this->escape($this->secret) ?></b>&quot;;
+  secret &quot;<b><?=$this->escape($this->secret)?></b>&quot;;
 };
 
 controls {
-    inet * port 953 allow { <b><?php echo $this->pleskIp ?></b>; 127.0.0.1; } keys { &quot;rndc-key&quot;; &quot;rndc-key-<?php echo $this->pleskIp ?>&quot;; };
+    inet * port 953 allow { <b><?=$this->escape($this->masterIp)?></b>; 127.0.0.1; } keys { &quot;rndc-key-<i><?=$this->escape($this->masterIp)?></i>&quot;; };
 };
 </pre>

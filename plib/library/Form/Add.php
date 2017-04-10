@@ -6,6 +6,15 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
     {
         parent::init();
 
+        $this->addElement('select', 'masterIp', array(
+            'label' => $this->lmsg('masterIpLabel'),
+            'multiOptions' => $this->_getIps(),
+            'required' => true,
+            'validators' => array(
+                array('NotEmpty', true),
+                array('Ip', true),
+            ),
+        ));
         $this->addElement('text', 'ip', array(
             'label' => $this->lmsg('ipLabel'),
             'value' => '',
@@ -14,6 +23,7 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
             'validators' => array(
                 array('NotEmpty', true),
                 array('Ip', true),
+                array('Callback', true, array(array($this, 'isExistingSlave'))), 
             ),
         ));
         $this->addElement('text', 'port', array(
@@ -41,6 +51,14 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
                 array('Callback', true, array(array($this, 'isValidSecret'))),
             ),
         ));
+        $this->addElement('text', 'rndcView', array(
+            'label' => $this->lmsg('viewLabel'),
+            'value' => '',
+            'required' => false,
+            'validators' => array(
+                array('Callback', true, array(array($this, 'isValidAlnumDashUnderscore'))),
+            ),
+        ));
 
         $this->addControlButtons(array(
             'cancelLink' => pm_Context::getBaseUrl(),
@@ -53,12 +71,36 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
         $slave->save($this->getValues());
     }
 
+    public function isExistingSlave($data)
+    {
+        $slave = new Modules_SlaveDnsManager_Slave("slave_$data.conf");
+        
+        if (!file_exists($slave->getConfigPath())) {
+            return true;
+        }
+        throw new pm_Exception($this->lmsg('invalidIpExistingSlave'));
+    }
+
     public function isValidSecret($data)
     {
         if (base64_encode(base64_decode($data)) === $data) {
             return true;
         }
         throw new pm_Exception($this->lmsg('invalidSecret'));
+    }
+
+    public function isValidAlnumDashUnderscore($data)
+    {
+        if (preg_match('/^[a-zA-Z0-9_-]+$/', $data)) {
+            return true;
+        }
+        throw new pm_Exception($this->lmsg('invalidAlnumDashUnderscore'));
+    }
+
+    private function _getIps()
+    {
+        $ips = Modules_SlaveDnsManager_IpAddress::getAvailable();
+        return array_combine($ips, $ips);
     }
 
     private function _getRandomSecret()

@@ -2,50 +2,28 @@
 // Copyright 1999-2016. Parallels IP Holdings GmbH.
 class Modules_SlaveDnsManager_Rndc
 {
-    private static $_serverIp = null;
-
-    public function getServerIP()
-    {
-        if (self::$_serverIp) {
-            return self::$_serverIp;
-        }
-
-        $request = "<ip><get/></ip>";
-        $response = pm_ApiRpc::getService('1.6.5.0')->call($request);
-        if ('ok' != $response->ip->get->result->status) {
-            throw new pm_Exception("Unable to get server IP. Error: {$response->ip->get->result->errtext}");
-        }
-
-        // Get default IP
-        foreach ($response->ip->get->result->addresses->ip_info as $address) {
-            if (!isset($address->default)) {
-                continue;
-            }
-            return self::$_serverIp = (string)$address->public_ip_address ?: (string)$address->ip_address;
-        }
-
-        // Get first IP
-        foreach ($response->ip->get->result->addresses->ip_info as $address) {
-            return self::$_serverIp = (string)$address->public_ip_address ?: (string)$address->ip_address;
-        }
-
-        throw new pm_Exception("Unable to get server IP: empty result.");
-    }
-
     private function _call(Modules_SlaveDnsManager_Slave $slave, $arguments, $verbose = false)
     {
-        $arguments = "-c \"{$slave->getConfigPath()}\" {$arguments} 2>&1";
+        $arguments = join(' ', [
+            "-b \"{$slave->getMasterIp()}\"",
+            "-s \"{$slave->getIp()}\"",
+            "-p \"{$slave->getPort()}\"",
+            "-y \"{$slave->getRndcKeyId()}\"",
+            "-c \"{$slave->getConfigPath()}\"",
+            $arguments,
+        ]);
+
         if (pm_ProductInfo::isWindows()) {
             $command = '"' . PRODUCT_ROOT . '\dns\bin\rndc.exe"';
         } else {
             $command = '/usr/sbin/rndc';
         }
-        exec("{$command} {$arguments}", $out, $code);
+        exec("{$command} {$arguments} 2>&1", $out, $code);
         $output = implode("\n", $out);
 
         if ($verbose) {
             if ($code != 0) {
-                throw new pm_Exception("Error code $code: $output");
+                throw new pm_Exception("$command $arguments\n$output\n\nError code: $code");
             }
             return $output;
         }
@@ -62,7 +40,8 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-            $this->_call($slave, "addzone {$domain} \"{ type slave; file \\\"{$domain}\\\"; masters { {$this->getServerIP()}; }; };\"");
+            $this->_call($slave, "addzone \"{$domain}\" \"{$slave->getRndcClass()}\" \"{$slave->getRndcView()}\"" .
+                " \"{ type slave; file \\\"{$domain}\\\"; masters { {$slave->getMasterIp()}; }; };\"");
         }
     }
 
@@ -70,7 +49,7 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-            $result = $this->_call($slave, "refresh {$domain}");
+            $result = $this->_call($slave, "refresh \"{$domain}\" \"{$slave->getRndcClass()}\" \"{$slave->getRndcView()}\"");
             if (false === $result) {
                 $this->addZone($domain, $slave);
             }
@@ -81,7 +60,7 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-            $this->_call($slave, "delzone {$domain}");
+            $this->_call($slave, "delzone \"{$domain}\" \"{$slave->getRndcClass()}\" \"{$slave->getRndcView()}\"");
         }
     }
 

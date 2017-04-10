@@ -6,6 +6,7 @@
     var removeSlaves = function() {
         Jsw.messageBox.show({
             type: Jsw.messageBox.TYPE_YESNO,
+            subtype: 'delete',
             text: '<?php echo $this->lmsg('removeConfirmation') ?>',
             onYesClick: function() {
                 var data = {config: []};
@@ -19,8 +20,8 @@
                 Jsw.redirectPost('<?php echo $this->getHelper('baseUrl')->moduleUrl(array('action' => 'remove')) ?>', data);
             },
             buttonTitles: {
-                'yes': '<?php echo $this->lmsg('removeConfirmationYes') ?>',
-                'no': '<?php echo $this->lmsg('removeConfirmationNo') ?>'
+                'yes': '<?php echo $this->lmsg('confirmationYes') ?>',
+                'no': '<?php echo $this->lmsg('confirmationNo') ?>'
             }
         });
     };
@@ -54,6 +55,21 @@
                     globalCheckbox.checked = false;
                 }
             });
+        });
+    };
+
+    var resyncZones = function() {
+        Jsw.messageBox.show({
+            type: Jsw.messageBox.TYPE_YESNO,
+            subtype: 'confirm',
+            text: '<?php echo $this->lmsg('resyncConfirmation') ?>',
+            onYesClick: function() {
+                Jsw.redirectPost('<?php echo $this->getHelper('baseUrl')->moduleUrl(array('action' => 'resync')) ?>');
+            },
+            buttonTitles: {
+                'yes': '<?php echo $this->lmsg('confirmationYes') ?>',
+                'no': '<?php echo $this->lmsg('confirmationNo') ?>'
+            }
         });
     };
 

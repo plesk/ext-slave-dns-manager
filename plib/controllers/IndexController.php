@@ -45,8 +45,6 @@ class IndexController extends pm_Controller_Action
         }
 
         $this->view->form = $form;
-        $rndc = new Modules_SlaveDnsManager_Rndc();
-        $this->view->pleskIp = $this->view->escape($rndc->getServerIP());
     }
 
     public function viewAction()
@@ -59,8 +57,24 @@ class IndexController extends pm_Controller_Action
         $this->view->form = new Modules_SlaveDnsManager_Form_View($slave);
     }
 
+    public function resyncAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            throw new pm_Exception('Method POST is required');
+        }
+
+        pm_ApiCli::call('repair', ['--dns', '-sync-zones', '-y']);
+
+        $this->_status->addInfo($this->lmsg('resyncDone'));
+        $this->_redirect('/');
+    }
+
     public function removeAction()
     {
+        if (!$this->getRequest()->isPost()) {
+            throw new pm_Exception('Method POST is required');
+        }
+
         $configs = $this->_getParam('config');
         if (!$configs || !is_array($configs)) {
             $this->_status->addMessage('error', $this->lmsg('emptySelection'));
