@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2017. Parallels IP Holdings GmbH.
 class Modules_SlaveDnsManager_Rndc
 {
     private function _call(Modules_SlaveDnsManager_Slave $slave, $arguments, $verbose = false)

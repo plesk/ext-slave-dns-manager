@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2017. Parallels IP Holdings GmbH.
 class Modules_SlaveDnsManager_Form_View extends pm_Form_Simple
 {
     private $_slave;
