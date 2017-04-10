@@ -99,9 +99,18 @@ class Modules_SlaveDnsManager_Slave
             }
         }
 
-        $masterIp = $this->getMasterIp();
         $keyAlgorithm = array_key_exists('algorithm', $data) ? $data['algorithm'] : 'hmac-md5';
         $keySecret = $data['secret'];
+
+        $this->_saveConfig($this->getConfigPath(), $this->_renderConfig($slaveIp, $keySecret, $keyAlgorithm));
+
+        $acl = new Modules_SlaveDnsManager_Acl();
+        $acl->add($slaveIp);
+    }
+
+    private function _renderConfig($slaveIp, $keySecret, $keyAlgorithm)
+    {
+        $masterIp = $this->getMasterIp();
 
         $view = new Zend_View();
         $view->setScriptPath(pm_Context::getPlibDir() . 'views/scripts');
@@ -109,7 +118,7 @@ class Modules_SlaveDnsManager_Slave
         $slaveConfiguration = trim(html_entity_decode(strip_tags($slaveConfiguration)));
         $slaveConfiguration = preg_replace('/^/m', '    ', $slaveConfiguration);
 
-        $configuration = <<<CONF
+        return <<<CONF
 /*
 $slaveConfiguration
 */
@@ -127,14 +136,20 @@ key "{$this->getRndcKeyId()}" {
 };
 
 CONF;
+    }
 
-        $result = file_put_contents($this->getConfigPath(), $configuration);
-        if (false === $result) {
-            throw new pm_Exception("Failed to save configuration {$this->_config}");
+    private function _saveConfig($path, $config)
+    {
+        $old = umask(0077);
+        try {
+            $result = file_put_contents($path, $config);
+        } finally {
+            umask($old);
         }
 
-        $acl = new Modules_SlaveDnsManager_Acl();
-        $acl->add($slaveIp);
+        if (false === $result) {
+            throw new pm_Exception("Failed to save configuration {$path}");
+        }
     }
 
     public function remove()
