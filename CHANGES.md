@@ -4,12 +4,12 @@
 * [+] Add support Split DNS (issue [#3](https://github.com/plesk/ext-slave-dns-manager/issues/3), [#7](https://github.com/plesk/ext-slave-dns-manager/issues/7))
 * [*] The extension saves settings in key-value storage
 * [*] Small increase verbosity in status icon tooltip if error occurred
-* [+] Add button 'Resync' with additional information
+* [+] Add button 'Resync' to sync all DNS zones from master to slaves
 * [+] Add navigation pathbar
 
 # 1.7.2 (4 April 2017)
 * [+] Add "Troubleshooting" in README.md
-* [*] Change link for [[learnMore]] from "http://devblog.plesk.com" to "https://www.plesk.cloud"
+* [*] Change link for [[learnMore]] from "http://devblog.plesk.com" to "https://www.plesk.com"
 * [+] Add RU description in meta.xml
 * [-] Fixed category in meta.xml
 * [+] Add DESCRIPTION.md
