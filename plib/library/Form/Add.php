@@ -99,8 +99,7 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
 
     private function _getIps()
     {
-        $ips = Modules_SlaveDnsManager_IpAddress::getAvailable();
-        return array_combine($ips, $ips);
+        return Modules_SlaveDnsManager_IpAddress::getAvailable();
     }
 
     private function _getRandomSecret()
