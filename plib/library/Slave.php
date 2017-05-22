@@ -65,6 +65,12 @@ class Modules_SlaveDnsManager_Slave
         return pm_Settings::get("masterIp-{$this->getIp()}", Modules_SlaveDnsManager_IpAddress::getDefault());
     }
 
+    public function getMasterPublicIp()
+    {
+        $ipAddress =  pm_Settings::get("masterIp-{$this->getIp()}", Modules_SlaveDnsManager_IpAddress::getDefault());
+        return Modules_SlaveDnsManager_IpAddress::getPublic($ipAddress);
+    }
+
     public function getPort()
     {
         return pm_Settings::get("port-{$this->getIp()}", 953);
@@ -111,10 +117,11 @@ class Modules_SlaveDnsManager_Slave
     private function _renderConfig($slaveIp, $keySecret, $keyAlgorithm)
     {
         $masterIp = $this->getMasterIp();
+        $masterPublicIp = $this->getMasterPublicIp();
 
         $view = new Zend_View();
         $view->setScriptPath(pm_Context::getPlibDir() . 'views/scripts');
-        $slaveConfiguration = $view->partial('index/slave-config.phtml', ['masterIp' => $masterIp, 'secret' => $keySecret]);
+        $slaveConfiguration = $view->partial('index/slave-config.phtml', ['masterPublicIp' => $masterPublicIp, 'secret' => $keySecret]);
         $slaveConfiguration = trim(html_entity_decode(strip_tags($slaveConfiguration)));
         $slaveConfiguration = preg_replace('/^/m', '    ', $slaveConfiguration);
 

@@ -3,6 +3,7 @@
 class Modules_SlaveDnsManager_IpAddress
 {
     private static $_ipAddresses;
+    private static $_defaultIpAddress;
 
     public static function getAvailable()
     {
@@ -19,12 +20,11 @@ class Modules_SlaveDnsManager_IpAddress
 
         // Get all IP-addresses
         foreach ($response->ip->get->result->addresses->ip_info as $address) {
-            $ipAddress = (string)$address->public_ip_address ?: (string)$address->ip_address;
+            $ipAddress = (string)$address->ip_address;
             if (isset($address->default)) {
-                array_unshift(self::$_ipAddresses, $ipAddress);
-            } else {
-                self::$_ipAddresses[] = $ipAddress;
+                self::$_defaultIpAddress = $ipAddress;
             }
+            self::$_ipAddresses[$ipAddress] = (string)$address->public_ip_address ?: (string)$address->ip_address;
         }
 
         if (count(self::$_ipAddresses) > 0) {
@@ -34,8 +34,16 @@ class Modules_SlaveDnsManager_IpAddress
         throw new pm_Exception("Unable to get server IP: empty result.");
     }
 
+    public static function getPublic($ipAddress)
+    {
+        return self::getAvailable()[$ipAddress];
+    }
+
     public static function getDefault()
     {
-        return reset(self::getAvailable());
+        if (!self::$_defaultIpAddress) {
+            $ipAddresses = array_keys(self::getAvailable());
+        }
+        return self::$_defaultIpAddress ?: reset($ipAddresses);
     }
 }

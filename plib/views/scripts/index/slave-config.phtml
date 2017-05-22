@@ -8,12 +8,12 @@ options {
     allow-new-zones yes;
 };
 
-    key &quot;rndc-key-<i><?=$this->escape($this->masterIp)?></i>&quot; {
+key &quot;rndc-key-<i><?=$this->escape($this->masterPublicIp)?></i>&quot; {
   algorithm hmac-md5;
   secret &quot;<b><?=$this->escape($this->secret)?></b>&quot;;
 };
 
 controls {
-    inet * port 953 allow { <b><?=$this->escape($this->masterIp)?></b>; 127.0.0.1; } keys { &quot;rndc-key-<i><?=$this->escape($this->masterIp)?></i>&quot;; };
+    inet * port 953 allow { <b><?=$this->escape($this->masterPublicIp)?></b>; 127.0.0.1; } keys { &quot;rndc-key-<i><?=$this->escape($this->masterPublicIp)?></i>&quot;; };
 };
 </pre>

@@ -5,23 +5,23 @@
     Jsw.onReady(function () {
         var select = document.getElementById('<?=$this->form->getElement('masterIp')->getId()?>');
 
-        function updateMasterIp() {
-            var value = select.options[select.selectedIndex].value;
+        function updateMasterPublicIp() {
+            var value = select.options[select.selectedIndex].text;
             var placeholders = document.getElementsByClassName('js-placeholder-ip');
             for (var i = 0; i < placeholders.length; i++) {
                 placeholders[i].innerHTML = value;
             }
         }
-        select.addEventListener('change', updateMasterIp);
+        select.addEventListener('change', updateMasterPublicIp);
 
         var config = document.getElementById('slave-config');
         config.innerHTML = config.innerHTML.replace(/%%js-placeholder-ip%%/g, '<span class="js-placeholder-ip"></span>');
-        updateMasterIp();
+        updateMasterPublicIp();
     });
 </script>
 <div class="hint" id="slave-config">
     <?=$this->partial('index/slave-config.phtml', [
-        'masterIp' => '%%js-placeholder-ip%%',
+        'masterPublicIp' => '%%js-placeholder-ip%%',
         'secret' => $this->form->getElement('secret')->getValue(),
     ])?>
 </div>
