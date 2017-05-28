@@ -42,7 +42,7 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
                 'noEscape' => true,
             ),
         ));
-        $this->setTools(array(
+        $buttons = array(
                  array(
                      'title'       => $this->lmsg('addToolTitle'),
                      'description' => $this->lmsg('addToolDescription'),
@@ -61,13 +61,17 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
                      'class'       => 'sb-remove-selected',
                      'link'        => 'javascript:removeSlaves()',
                  ),
-                 array(
+        );
+        if (version_compare(pm_ProductInfo::getVersion(), '17.0') >= 0) {
+            $buttons[] = array(
                      'title'       => $this->lmsg('resyncToolTitle'),
                      'description' => $this->lmsg('resyncToolDescription'),
                      'class'       => 'sb-restart',
                      'link'        => 'javascript:resyncZones()',
-                 ),
-        ));
+                 );
+        }
+        $this->setTools($buttons);
         $this->setDataUrl(array('action' => 'list-data'));
     }
 }
+
