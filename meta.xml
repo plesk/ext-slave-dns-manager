@@ -5,7 +5,7 @@
 	<name>Slave DNS Manager</name>
 	<description>The extension for managing a remote slave DNS server via rndc protocol (bind).</description>
 	<category>dns</category>
-	<version>1.8.1</version>
+	<version>1.9.0</version>
 	<release>1</release>
 	<vendor>Plesk</vendor>
 	<url>https://github.com/plesk/ext-slave-dns-manager</url>
