@@ -1,6 +1,9 @@
+# 1.9.1 (12 Apr 2018)
+* [+] If slave DNS server supports flag "-clean" (BIND v9.10+), it will be added automatically for 'rndc delzone'
+
 # 1.9.0 (29 May 2017)
 * [-] Fixed an issue with IP-address if Plesk behind NAT (issue [#20](https://github.com/plesk/ext-slave-dns-manager/issues/20))
-* [-] 'Resync' button hidden in Plesk 12.5 and earlier
+* [-] 'Resync' button hidden in Plesk 12.5 and earlier because required API not supported
 
 # 1.8 (10 April 2017)
 * [+] Add support choose server's IP (issue [#13](https://github.com/plesk/ext-slave-dns-manager/issues/13))

@@ -60,7 +60,12 @@ class Modules_SlaveDnsManager_Rndc
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
-            $this->_call($slave, "delzone \"{$domain}\" \"{$slave->getRndcClass()}\" \"{$slave->getRndcView()}\"");
+            $slaveStatus = $this->checkStatus($slave);
+            // version: 9.9.4-RedHat-9.9.4-51.el7_4.2 (none) <id:8f9657aa>
+            // version: BIND 9.10.3-P4-Ubuntu <id:ebd72b3> (none)
+            $cleanFlag = (preg_match("/version: (BIND )?(9\.10\.\d+|9\.11\.\d+|9\.12\.\d+)/", $slaveStatus)) ? "-clean" : ""; 
+
+            $this->_call($slave, "delzone $cleanFlag \"{$domain}\" \"{$slave->getRndcClass()}\" \"{$slave->getRndcView()}\"");
         }
     }
 
