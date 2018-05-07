@@ -1,4 +1,4 @@
-# 1.9.1 (12 Apr 2018)
+# 1.9.1 (08 May 2018)
 * [+] If slave DNS server supports flag "-clean" (BIND v9.10+), it will be added automatically for 'rndc delzone'
 
 # 1.9.0 (29 May 2017)
