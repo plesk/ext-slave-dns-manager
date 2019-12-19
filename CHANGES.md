@@ -1,3 +1,7 @@
+# 1.9.2 (19 December 2019)
+* [-] The status icons for the slave servers are now properly shown in the extension's interface. (EXTPLESK-1082)
+* [-] On Plesk Obsidian servers, the extension's interface is no longer malformed and unusable. (EXTPLESK-1403)
+
 # 1.9.1 (08 May 2018)
 * [+] If slave DNS server supports flag "-clean" (BIND v9.10+), it will be added automatically for 'rndc delzone'
 
