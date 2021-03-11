@@ -9,7 +9,7 @@
 	<release>0</release>
 	<vendor>Plesk</vendor>
 	<url>https://github.com/plesk/ext-slave-dns-manager</url>
-	<plesk_min_version>17.0.17</plesk_min_version>
+	<plesk_min_version>12.0.18</plesk_min_version>
 	<!-- Localized descriptions below -->
 	<description xml:lang="ru-RU">Расширение для управления удаленным slave DNS-сервером через протокол rndc (bind)</description>
 </module>
