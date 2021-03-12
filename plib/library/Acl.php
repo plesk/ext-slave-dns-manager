@@ -2,6 +2,8 @@
 // Copyright 1999-2017. Parallels IP Holdings GmbH.
 class Modules_SlaveDnsManager_Acl
 {
+    const PROTOCOL_VERSION = '1.6.9.1';
+
     public function add($ipAddress)
     {
         $request = <<<REQUEST
@@ -32,7 +34,7 @@ REQUEST;
 
     private function _call($request)
     {
-        $response = pm_ApiRpc::getService('1.6.5.0')->call($request);
+        $response = pm_ApiRpc::getService(self::PROTOCOL_VERSION)->call($request);
         // TODO error handling
 //        $response->dns->add_to_acl->result->status
 //        $response->dns->remove_from_acl->result->status
