@@ -56,7 +56,7 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
             'value' => '',
             'required' => false,
             'validators' => array(
-                array('Callback', true, array(array($this, 'isValidAlnumDashUnderscore'))),
+                array('Callback', true, array(array($this, 'isValidAlnumDashUnderscoreSemicol'))),
             ),
         ));
 
@@ -89,9 +89,9 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
         throw new pm_Exception($this->lmsg('invalidSecret'));
     }
 
-    public function isValidAlnumDashUnderscore($data)
+    public function isValidAlnumDashUnderscoreSemicol($data)
     {
-        if (preg_match('/^[a-zA-Z0-9_-]+$/', $data)) {
+        if (preg_match('/^[;a-zA-Z0-9_-]+$/', $data)) {
             return true;
         }
         throw new pm_Exception($this->lmsg('invalidAlnumDashUnderscore'));
