@@ -3,6 +3,8 @@
 $messages = array(
     // Pathbar
     'controllers.index.index.title' => 'Slave DNS Manager',
+    'leftMenuTitle' => 'Slave DNS Manager',
+    'leftMenuDescription' => 'Slave DNS Manager',
 
     'listPageTitle' => 'Slave DNS Manager',
     'statusColumnTitle' => 'Status',
