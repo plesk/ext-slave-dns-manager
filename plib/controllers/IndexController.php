@@ -16,9 +16,27 @@ class IndexController extends pm_Controller_Action
         $this->_forward('list');
     }
 
+    public function enableCustomBackendAction()
+    {
+        try {
+            (new Modules_SlaveDnsManager_CustomBackendService())->enable();
+            $this->_status->addInfo($this->lmsg('customBackendEnabled'));
+        } catch (\Exception $e) {
+            $this->_status->addError($this->lmsg('customBackendEnablingError', ['error' => $e->getMessage()]));
+        }
+
+        $this->_redirect('/');
+    }
+
     public function listAction()
     {
         $this->view->pageTitle = $this->lmsg('listPageTitle');
+
+        if (!(new Modules_SlaveDnsManager_CustomBackendService())->isEnabled(pm_Bootstrap::getDbAdapter())){
+            $this->_status->addWarning($this->lmsg('customBackendAlert', [
+                'enableUrl' => pm_Context::getActionUrl('index', 'enable-custom-backend')
+            ]), true);
+        }
 
         $slavesList = new Modules_SlaveDnsManager_List_Slaves($this->view, $this->_request);
         $this->view->list = $slavesList;

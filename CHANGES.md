@@ -1,5 +1,6 @@
 # 1.10.0 (13 August 2021)
 
+* [+] The extension now shows a warning if the custom backend script is not properly configured and offers to configure it if necessary.
 * [+] Added the extension tab to the left navigation pane in Power User and Service Provider views.
 
 # 1.9.2 (19 December 2019)
