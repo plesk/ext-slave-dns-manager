@@ -19,9 +19,10 @@ class Modules_SlaveDnsManager_List_Slaves extends pm_View_List_Simple
 
             $ip = $view->escape((string)$slave->getIp());
             $config = $view->escape((string)$slave->getConfig());
+            $iconUri = pm_Context::getBaseUrl() . "icons/{$icon}.png";
             $data[] = array(
                 'select' => '<input type="checkbox" class="checkbox" name="listCheckbox[]" value="' . $config . '"/>',
-                'status' => '<img class="slave-status" src="/theme/icons/16/plesk/' . $icon . '.png" title="' . $view->escape($details) . '"/>',
+                'status' => '<img class="slave-status" src="' . $iconUri . '" title="' . $view->escape($details) . '"/>',
                 'config' => '<a href="' . $view->getHelper('baseUrl')->moduleUrl(array('action' => 'view')) . '?config=' . $config . '">' . $ip . '</a>',
             );
         }

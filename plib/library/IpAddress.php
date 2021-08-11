@@ -5,6 +5,8 @@ class Modules_SlaveDnsManager_IpAddress
     private static $_ipAddresses;
     private static $_defaultIpAddress;
 
+    const PROTOCOL_VERSION = '1.6.9.1';
+
     public static function getAvailable()
     {
         if (isset(self::$_ipAddresses)) {
@@ -13,7 +15,7 @@ class Modules_SlaveDnsManager_IpAddress
         self::$_ipAddresses = [];
 
         $request = "<ip><get/></ip>";
-        $response = pm_ApiRpc::getService('1.6.5.0')->call($request);
+        $response = pm_ApiRpc::getService(self::PROTOCOL_VERSION)->call($request);
         if ('ok' != $response->ip->get->result->status) {
             throw new pm_Exception("Unable to get server IP. Error: {$response->ip->get->result->errtext}");
         }
