@@ -90,6 +90,11 @@ class Modules_SlaveDnsManager_Slave
     {
         return pm_Settings::get("rndcView-{$this->getIp()}", '_default');
     }
+    
+    public function getMultipleView($view)
+    {
+        return explode(';', $view);
+    }
 
     public function save(array $data)
     {
