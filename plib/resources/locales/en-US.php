@@ -7,7 +7,7 @@ $messages = array(
     'leftMenuDescription' => 'Slave DNS Manager',
     'customBackendAlert' => 'The integration of Plesk with the Slave DNS Manager extension is not enabled. <a href="%%enableUrl%%">Enable</a>',
     'customBackendEnablingError' => 'Failed to enable custom backend: %%error%%',
-    'customBackendEnabled' => 'The integration of Plesk with Slave DNS Manager extension is enabled.',
+    'customBackendEnabled' => 'The integration of Plesk with the Slave DNS Manager extension is enabled.',
 
     'listPageTitle' => 'Slave DNS Manager',
     'statusColumnTitle' => 'Status',

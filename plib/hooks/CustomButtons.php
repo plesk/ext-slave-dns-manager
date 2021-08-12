@@ -12,7 +12,7 @@ class Modules_SlaveDnsManager_CustomButtons extends pm_Hook_CustomButtons
             $commonParams = [
                 'title'         => pm_Locale::lmsg('leftMenuTitle'),
                 'description'   => pm_Locale::lmsg('leftMenuDescription'),
-                'icon'          => pm_Context::getBaseUrl() . 'icons/32x32.png',
+                'icon'          => pm_Context::getBaseUrl() . 'icons/logo.svg',
                 'link'          => pm_Context::getActionUrl('index'),
                 'contextParams' => true
             ];
