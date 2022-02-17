@@ -1,3 +1,7 @@
+# 1.10.1 (18 February 2022)
+
+* [-] Removal of DNS zones is now again synced between Plesk and secondary DNS servers that use BIND 9.14 and later. (EXTPLESK-3353)
+
 # 1.10.0 (13 August 2021)
 
 * [+] The extension now shows a warning if the custom backend script is not properly configured and offers to configure it if necessary.
