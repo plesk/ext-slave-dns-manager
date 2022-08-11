@@ -1,3 +1,7 @@
+# 1.10.2 (18 August 2022)
+
+* [-] Plesk Search no longer shows placeholders for Slave DNS Manager pages. (EXTPLESK-1040)
+
 # 1.10.1 (18 February 2022)
 
 * [-] Removal of DNS zones is now again synced between Plesk and secondary DNS servers that use BIND 9.14 and later. (EXTPLESK-3353)

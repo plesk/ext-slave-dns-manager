@@ -2,7 +2,6 @@
 // Copyright 1999-2017. Parallels IP Holdings GmbH.
 $messages = array(
     // Pathbar
-    'controllers.index.index.title' => 'Slave DNS Manager',
     'leftMenuTitle' => 'Slave DNS Manager',
     'leftMenuDescription' => 'Slave DNS Manager',
     'customBackendAlert' => 'The integration of Plesk with the Slave DNS Manager extension is not enabled. <a href="%%enableUrl%%">Enable</a>',
