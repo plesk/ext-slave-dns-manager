@@ -9,14 +9,12 @@ class Modules_SlaveDnsManager_Navigation extends pm_Hook_Navigation
             [
                 'controller' => 'index',
                 'action' => 'index',
+                'label' => pm_Locale::lmsg('listPageTitle'),
                 'pages' => [
                     [
                         'controller' => 'index',
                         'action' => 'add',
-                    ],
-                    [
-                        'controller' => 'index',
-                        'action' => 'view',
+                        'label' => pm_Locale::lmsg('addPageTitle'),
                     ],
                 ],
             ],
