@@ -63,7 +63,7 @@ class Modules_SlaveDnsManager_Rndc
             $slaveStatus = $this->checkStatus($slave);
             // version: 9.9.4-RedHat-9.9.4-51.el7_4.2 (none) <id:8f9657aa>
             // version: BIND 9.10.3-P4-Ubuntu <id:ebd72b3> (none)
-            $cleanFlag = (preg_match("/version: (BIND )?((([9]\.[1-9]?[0-9])|([1-9][0-9]\.[0-9]?[0-9]))\.\d+)/", $slaveStatus)) ? "-clean" : "";
+            $cleanFlag = (preg_match("/version: (BIND )?(9\.[1-9][0-9]+)\./", $slaveStatus)) ? "-clean" : "";
             if ($cleanFlag) {
                 \pm_Log::debug('Add -clean option because Bind version > 9.10');
             }

@@ -1,6 +1,7 @@
 # 1.10.2 (18 August 2022)
 
 * [-] Plesk Search no longer shows placeholders for Slave DNS Manager pages. (EXTPLESK-1040)
+* [-] The extension no longer uses the `-clean` flag to manage BIND version 9.10 and earlier. (EXTPLESK-2647)
 
 # 1.10.1 (18 February 2022)
 
