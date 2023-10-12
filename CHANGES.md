@@ -1,3 +1,7 @@
+# 1.10.3 (12 October 2023)
+
+* [*] Internal improvements.
+
 # 1.10.2 (18 August 2022)
 
 * [-] Plesk Search no longer shows placeholders for Slave DNS Manager pages. (EXTPLESK-1040)
