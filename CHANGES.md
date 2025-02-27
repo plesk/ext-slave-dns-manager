@@ -1,4 +1,4 @@
-# 1.10.4 (01 March 2025)
+# 1.10.4 (1 March 2025)
 
 * [+] Added support for the HMAC-SHA256 algorithm, which is now the new default option.
 
