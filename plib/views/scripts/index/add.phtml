@@ -3,29 +3,43 @@
 ?>
 <script type="text/javascript">
     Jsw.onReady(function () {
-        var select = document.getElementById('<?=$this->form->getElement('masterIp')->getId()?>');
+        var selectMasterPublicIp = document.getElementById('<?=$this->form->getElement('masterIp')->getId()?>');
+        var selectAlgorithm = document.getElementById('<?=$this->form->getElement('algorithm')->getId()?>');
 
         function updateMasterPublicIp() {
-            var value = select.options[select.selectedIndex].text;
+            var value = selectMasterPublicIp.options[selectMasterPublicIp.selectedIndex].text;
             var placeholders = document.getElementsByClassName('js-placeholder-ip');
             for (var i = 0; i < placeholders.length; i++) {
                 placeholders[i].innerHTML = value;
             }
         }
-        select.addEventListener('change', updateMasterPublicIp);
+
+        function updateAlgorithm() {
+            var value = selectAlgorithm.options[selectAlgorithm.selectedIndex].text;
+            var placeholders = document.getElementsByClassName('js-placeholder-algorithm');
+            for (var i = 0; i < placeholders.length; i++) {
+                placeholders[i].innerHTML = value;
+            }
+        }
+
+        selectMasterPublicIp.addEventListener('change', updateMasterPublicIp);
+        selectAlgorithm.addEventListener('change', updateAlgorithm);
 
         var config = document.getElementById('slave-config');
         config.innerHTML = config.innerHTML.replace(/%%js-placeholder-ip%%/g, '<span class="js-placeholder-ip"></span>');
+        config.innerHTML = config.innerHTML.replace(/%%js-placeholder-algorithm%%/g, '<span class="js-placeholder-algorithm"></span>');
         updateMasterPublicIp();
+        updateAlgorithm()
     });
 </script>
 <div class="hint" id="slave-config">
     <?=$this->partial('index/slave-config.phtml', [
         'masterPublicIp' => '%%js-placeholder-ip%%',
+        'algorithm' => '%%js-placeholder-algorithm%%',
         'secret' => $this->form->getElement('secret')->getValue(),
     ])?>
 </div>
 <p>
-    <a href="https://www.plesk.com/blog/product-technology/slave-dns-and-plesk" target="_blank"><?php echo $this->lmsg('learnMore') ?></a>
+    <a href="https://docs.plesk.com/en-US/current/administrator-guide/79004/" target="_blank"><?php echo $this->lmsg('learnMore') ?></a>
 </p>
 <?php echo $this->form ?>

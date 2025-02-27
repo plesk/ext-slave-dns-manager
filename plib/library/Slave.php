@@ -105,7 +105,7 @@ class Modules_SlaveDnsManager_Slave
             }
         }
 
-        $keyAlgorithm = array_key_exists('algorithm', $data) ? $data['algorithm'] : 'hmac-md5';
+        $keyAlgorithm = array_key_exists('algorithm', $data) ? $data['algorithm'] : 'hmac-sha256';
         $keySecret = $data['secret'];
 
         $this->_saveConfig($this->getConfigPath(), $this->_renderConfig($slaveIp, $keySecret, $keyAlgorithm));
@@ -121,7 +121,7 @@ class Modules_SlaveDnsManager_Slave
 
         $view = new Zend_View();
         $view->setScriptPath(pm_Context::getPlibDir() . 'views/scripts');
-        $slaveConfiguration = $view->partial('index/slave-config.phtml', ['masterPublicIp' => $masterPublicIp, 'secret' => $keySecret]);
+        $slaveConfiguration = $view->partial('index/slave-config.phtml', ['masterPublicIp' => $masterPublicIp, 'secret' => $keySecret, 'algorithm' => $keyAlgorithm]);
         $slaveConfiguration = trim(html_entity_decode(strip_tags($slaveConfiguration)));
         $slaveConfiguration = preg_replace('/^/m', '    ', $slaveConfiguration);
 

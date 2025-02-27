@@ -37,8 +37,8 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
         ));
         $this->addElement('select', 'algorithm', array(
             'label' => $this->lmsg('algorithmLabel'),
-            'multiOptions' => array('hmac-md5' => 'hmac-md5',),
-            'value' => 'hmac-md5',
+            'multiOptions' => array('hmac-sha256' => 'hmac-sha256', 'hmac-md5' => 'hmac-md5',),
+            'value' => 'hmac-sha256',
             'required' => true,
         ));
         $this->addElement('text', 'secret', array(
