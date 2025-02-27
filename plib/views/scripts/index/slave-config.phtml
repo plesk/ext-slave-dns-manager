@@ -9,7 +9,7 @@ options {
 };
 
 key &quot;rndc-key-<i><?=$this->escape($this->masterPublicIp)?></i>&quot; {
-  algorithm hmac-md5;
+  algorithm <?=$this->escape($this->algorithm)?>;
   secret &quot;<b><?=$this->escape($this->secret)?></b>&quot;;
 };
 

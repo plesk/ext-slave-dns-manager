@@ -9,8 +9,8 @@ use Modules_SlaveDnsManager_Slave;
 
 class AddCommand extends AbstractCommand
 {
-    const AVAILABLE_ALGORITHMS = ['hmac-md5'];
-    const DEFAULT_ALGORITHM = 'hmac-md5';
+    const AVAILABLE_ALGORITHMS = ['hmac-sha256', 'hmac-md5'];
+    const DEFAULT_ALGORITHM = 'hmac-sha256';
     const DEFAULT_PORT = 953;
 
     protected function _checkParams()
