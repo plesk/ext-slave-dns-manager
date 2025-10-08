@@ -69,7 +69,7 @@ class Modules_SlaveDnsManager_Rndc
             }
             // Only delete if the current config for the zone has it mastered on this plesk host
             // Ensure zones arent removed that may be on other plesk hosts
-            $slaveDomainStatus = $this->checkDomainMaster($domain, $slave)
+            $slaveDomainStatus = $this->checkDomainMaster($domain, $slave);
             // Domain is configured on the slave
             if (preg_match("/zone \"{$domain}\".*}; };/", $slaveDomainStatus)) {
                  // Domain is configured on slave with master set to current master
