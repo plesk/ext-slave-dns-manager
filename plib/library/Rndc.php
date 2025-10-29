@@ -36,7 +36,7 @@ class Modules_SlaveDnsManager_Rndc
         return $code == 0;
     }
 
-    public function addZone($domain, Modules_SlaveDnsManager_Slave $slave = null)
+    public function addZone($domain, ?Modules_SlaveDnsManager_Slave $slave = null)
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
@@ -45,7 +45,7 @@ class Modules_SlaveDnsManager_Rndc
         }
     }
 
-    public function updateZone($domain, Modules_SlaveDnsManager_Slave $slave = null)
+    public function updateZone($domain, ?Modules_SlaveDnsManager_Slave $slave = null)
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
@@ -56,7 +56,7 @@ class Modules_SlaveDnsManager_Rndc
         }
     }
 
-    public function deleteZone($domain, Modules_SlaveDnsManager_Slave $slave = null)
+    public function deleteZone($domain, ?Modules_SlaveDnsManager_Slave $slave = null)
     {
         $slaves = null === $slave ? Modules_SlaveDnsManager_Slave::getList() : [$slave];
         foreach ($slaves as $slave) {
