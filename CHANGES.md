@@ -1,4 +1,4 @@
-# 1.10.5 (6 November 2025)
+# 1.10.5 (19 February 2026)
 
 * [*] Security improvements.
 
