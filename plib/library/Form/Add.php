@@ -23,7 +23,7 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
             'validators' => array(
                 array('NotEmpty', true),
                 array('Ip', true),
-                array('Callback', true, array(array($this, 'isExistingSlave'))), 
+                new Modules_SlaveDnsManager_Validator_ExistingSlave(),
             ),
         ));
         $this->addElement('text', 'port', array(
@@ -69,16 +69,6 @@ class Modules_SlaveDnsManager_Form_Add extends pm_Form_Simple
     {
         $slave = new Modules_SlaveDnsManager_Slave();
         $slave->save($this->getValues());
-    }
-
-    public function isExistingSlave($data)
-    {
-        $slave = new Modules_SlaveDnsManager_Slave("slave_$data.conf");
-        
-        if (!file_exists($slave->getConfigPath())) {
-            return true;
-        }
-        throw new pm_Exception($this->lmsg('invalidIpExistingSlave'));
     }
 
     public function isValidSecret($data)
