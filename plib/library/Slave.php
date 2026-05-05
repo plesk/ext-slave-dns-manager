@@ -108,10 +108,10 @@ class Modules_SlaveDnsManager_Slave
         $keyAlgorithm = array_key_exists('algorithm', $data) ? $data['algorithm'] : 'hmac-sha256';
         $keySecret = $data['secret'];
 
-        $this->_saveConfig($this->getConfigPath(), $this->_renderConfig($slaveIp, $keySecret, $keyAlgorithm));
-
         $acl = new Modules_SlaveDnsManager_Acl();
         $acl->add($slaveIp);
+
+        $this->_saveConfig($this->getConfigPath(), $this->_renderConfig($slaveIp, $keySecret, $keyAlgorithm));
     }
 
     private function _renderConfig($slaveIp, $keySecret, $keyAlgorithm)

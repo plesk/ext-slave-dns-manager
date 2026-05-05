@@ -17,12 +17,12 @@ class AddCommand extends AbstractCommand
     {
         $this->_checkRequiredParams(['ip', 'secret']);
 
-        $alg = $this->_params['algorithm'];
+        $alg = $this->_params['algorithm'] ?? null;
         if (!is_null($alg) && !in_array($alg, self::AVAILABLE_ALGORITHMS)) {
             throw new ApiException('Algorithm should be one of \'' . join(', ', self::AVAILABLE_ALGORITHMS) . '\'');
         }
 
-        $port = $this->_params['port'];
+        $port = $this->_params['port'] ?? null;
         if (!is_null($port) && !is_numeric($port)) {
             throw new ApiException('Port should be numeric value');
         }
