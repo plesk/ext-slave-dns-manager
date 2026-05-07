@@ -16,13 +16,14 @@ class AddCommand extends AbstractCommand
     protected function _checkParams()
     {
         $this->_checkRequiredParams(['ip', 'secret']);
+        $this->_checkIp();
 
-        $alg = $this->_params['algorithm'];
+        $alg = $this->_params['algorithm'] ?? null;
         if (!is_null($alg) && !in_array($alg, self::AVAILABLE_ALGORITHMS)) {
             throw new ApiException('Algorithm should be one of \'' . join(', ', self::AVAILABLE_ALGORITHMS) . '\'');
         }
 
-        $port = $this->_params['port'];
+        $port = $this->_params['port'] ?? null;
         if (!is_null($port) && !is_numeric($port)) {
             throw new ApiException('Port should be numeric value');
         }
@@ -43,5 +44,24 @@ class AddCommand extends AbstractCommand
         return [
             'ip' => $ip,
         ];
+    }
+
+    /**
+     * @throws ApiException
+     */
+    private function _checkIp(): void
+    {
+        $ip = $this->_params['ip'];
+
+        $validators = [
+            new \Zend_Validate_Ip(),
+            new \Modules_SlaveDnsManager_Validator_ExistingSlave()
+        ];
+
+        foreach ($validators as $validator) {
+            if (!$validator->isValid($ip)) {
+                throw new ApiException(current($validator->getMessages()));
+            }
+        }
     }
 }

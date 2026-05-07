@@ -1,0 +1,9 @@
+{
+    "name": "plesk/ext-slave-dns-manager",
+    "config": {
+        "vendor-dir": "plib/vendor"
+    },
+    "require-dev": {
+        "plesk/pm-api-stubs": "^18.0"
+    }
+}
