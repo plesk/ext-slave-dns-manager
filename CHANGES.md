@@ -1,4 +1,4 @@
-# 1.10.6 (unreleased)
+# 1.10.6 (28 May 2026)
 
 * [*] Improved input validation for the XML API endpoint parameters.
 
