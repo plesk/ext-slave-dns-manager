@@ -22,6 +22,18 @@ foreach ($data as $task) {
         continue;
     }
 
+    if ($command !== 'delete') {
+        try {
+            $request = "<dns><get_rec><filter><site-name>{$domain}</site-name></filter></get_rec></dns>";
+            $response = pm_ApiRpc::getService('1.6.9.1')->call($request);
+            if ('ok' !== (string)$response->dns->get_rec->result->status) {
+                continue;
+            }
+        } catch (\Exception $e) {
+            continue;
+        }
+    }
+
     $rndc = new Modules_SlaveDnsManager_Rndc();
 
     switch ($command) {
