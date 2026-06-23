@@ -1,3 +1,7 @@
+# 1.10.7 (22 June 2026)
+
+* [-] Avoid triggering rndc on domains with disabled DNS (EXTPLESK-13806)
+
 # 1.10.6 (28 May 2026)
 
 * [*] Improved input validation for the XML API endpoint parameters.
