@@ -1,3 +1,7 @@
+# 1.10.8 (24 June 2026)
+
+* [-] Fixed an issue where DNS was not syncing with Slave DNS (EXTPLESK-14071)
+
 # 1.10.7 (22 June 2026)
 
 * [-] Avoid triggering rndc on domains with disabled DNS (EXTPLESK-13806)
