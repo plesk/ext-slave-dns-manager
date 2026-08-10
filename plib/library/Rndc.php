@@ -67,12 +67,27 @@ class Modules_SlaveDnsManager_Rndc
             if ($cleanFlag) {
                 \pm_Log::debug('Add -clean option because Bind version > 9.10');
             }
-            $this->_call($slave, "delzone $cleanFlag \"{$domain}\" \"{$slave->getRndcClass()}\" \"{$slave->getRndcView()}\"");
+            // Only delete if the current config for the zone has it mastered on this plesk host
+            // Ensure zones arent removed that may be on other plesk hosts
+            $slaveDomainStatus = $this->checkDomainMaster($domain, $slave);
+            // Domain is configured on the slave
+            if (preg_match("/zone \"{$domain}\".*}; };/", $slaveDomainStatus)) {
+                 // Domain is configured on slave with master set to current master
+                 if (preg_match("/zone \"{$domain}\".*masters { {$slave->getMasterPublicIp()}; }; };/", $slaveDomainStatus)) {
+                     $this->_call($slave, "delzone $cleanFlag \"{$domain}\" \"{$slave->getRndcClass()}\" \"{$slave->getRndcView()}\"");
+                 } else {
+                     error_log("$domain configured with a different master than {$slave->getMasterPublicIp()}, not deleting");
+                 }
+            }
         }
     }
 
     public function checkStatus(Modules_SlaveDnsManager_Slave $slave)
     {
         return $this->_call($slave, "status", true);
+    }
+    public function checkDomainMaster($domain, Modules_SlaveDnsManager_Slave $slave)
+    {
+       return $this->_call($slave, "showzone $domain", true);
     }
 }
